@@ -29,7 +29,7 @@ void main()
             TH0 = 0xB8;
             TL0 = 0x00;
             cntOverflow++;
-            if(cntOverflow == 50)
+            if(cntOverflow >= 50)
             {
                 cntOverflow = 0;    //清零溢出次数，重新开始计时
                 if(leftFlag == 0)

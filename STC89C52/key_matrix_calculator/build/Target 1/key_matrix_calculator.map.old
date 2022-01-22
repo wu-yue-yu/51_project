@@ -1,0 +1,215 @@
+LX51 LINKER/LOCATER V4.66.97.0                                                          01/22/2022  15:15:58  PAGE 1
+
+
+LX51 LINKER/LOCATER V4.66.97.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\LX51.EXE .\build\Target 1\main.o, .\build\Target 1\STARTUP.o, C:\KEIL_V5\C51\LIB\C51S.LIB TO .\build\
+>> Target 1\key_matrix_calculator PRINT (.\build\Target 1\key_matrix_calculator.map) REMOVEUNUSED
+
+
+CPU MODE:     8051 MODE
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\build\Target 1\main.o (MAIN)
+         COMMENT TYPE 0: C51 V9.60.0.0
+  .\build\Target 1\STARTUP.o (?C_STARTUP)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?LMUL)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULDIV)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+
+
+ACTIVE MEMORY CLASSES OF MODULE:  .\build\Target 1\key_matrix_calculator (MAIN)
+
+BASE        START       END         USED      MEMORY CLASS
+==========================================================
+C:000000H   C:000000H   C:00FFFFH   000369H   CODE
+I:000000H   I:000000H   I:00007FH   00003CH   DATA
+C:000000H   C:000000H   C:00FFFFH   000028H   CONST
+I:000020H.0 I:000020H.0 I:00002FH.7 000000H.5 BIT
+I:000000H   I:000000H   I:0000FFH   000001H   IDATA
+
+
+MEMORY MAP OF MODULE:  .\build\Target 1\key_matrix_calculator (MAIN)
+
+
+START     STOP      LENGTH    ALIGN  RELOC    MEMORY CLASS   SEGMENT NAME
+=========================================================================
+
+* * * * * * * * * * *   D A T A   M E M O R Y   * * * * * * * * * * * * *
+000000H   000007H   000008H   ---    AT..     DATA           "REG BANK 0"
+000008H.0 00001FH.7 000018H.0 ---    ---      **GAP**
+000020H.0 000020H.4 000000H.5 BIT    UNIT     BIT            ?BI?MAIN
+000020H.5 000020H   000000H.3 ---    ---      **GAP**
+000021H   000054H   000034H   BYTE   UNIT     DATA           ?DT?MAIN
+000055H   000055H   000001H   BYTE   UNIT     IDATA          ?STACK
+
+* * * * * * * * * * *   C O D E   M E M O R Y   * * * * * * * * * * * * *
+000000H   000002H   000003H   ---    OFFS..   CODE           ?CO??C_STARTUP?0
+000003H   00000AH   000008H   ---    ---      **GAP**
+00000BH   00000DH   000003H   BYTE   OFFS..   CODE           ?MAIN?0000B
+00000EH   00012AH   00011DH   BYTE   UNIT     CODE           ?C?LIB_CODE
+00012BH   00020BH   0000E1H   BYTE   UNIT     CODE           ?PR?KEYSCAN?MAIN
+00020CH   000297H   00008CH   BYTE   UNIT     CODE           ?C_C51STARTUP
+000298H   0002E6H   00004FH   BYTE   UNIT     CODE           ?C_INITSEG
+0002E7H   00032BH   000045H   BYTE   UNIT     CODE           ?PR?INTERRUPTTIMER0?MAIN
+00032CH   000355H   00002AH   BYTE   UNIT     CODE           ?PR?_LEDSCAN?MAIN
+000356H   000370H   00001BH   BYTE   UNIT     CODE           ?PR?MAIN?MAIN
+000371H   000398H   000028H   BYTE   UNIT     CONST          ?CO?MAIN
+
+* * * * * * * * *   R E M O V E D     S E G M E N T S   * * * * * * * *
+   *DEL*:           00009DH   BYTE   UNIT     CODE           ?PR?_SHOWNUMBER?MAIN
+   *DEL*:           00000DH   BYTE   UNIT     DATA           ?DT?_SHOWNUMBER?MAIN
+   *DEL*:           00007FH   BYTE   UNIT     CODE           ?PR?DOCALCULATE?MAIN
+   *DEL*:           00013DH   BYTE   UNIT     CODE           ?PR?_KEYACTION?MAIN
+   *DEL*:           000001H   BYTE   UNIT     DATA           ?DT?_KEYACTION?MAIN
+LX51 LINKER/LOCATER V4.66.97.0                                                        01/22/2022  15:15:58  PAGE 2
+
+
+
+
+
+OVERLAY MAP OF MODULE:   .\build\Target 1\key_matrix_calculator (MAIN)
+
+
+FUNCTION/MODULE              BIT_GROUP   DATA_GROUP 
+--> CALLED FUNCTION/MODULE  START  STOP  START  STOP
+====================================================
+INTERRUPTTIMER0/MAIN        ----- -----  ----- -----
+  +--> _LEDSCAN/MAIN
+  +--> KEYSCAN/MAIN
+
+_LEDSCAN/MAIN               ----- -----  ----- -----
+
+KEYSCAN/MAIN                ----- -----  ----- -----
+
+*** NEW ROOT **************
+
+?C_C51STARTUP               ----- -----  ----- -----
+  +--> MAIN/MAIN
+  +--> ?C_INITSEG
+
+MAIN/MAIN                   ----- -----  ----- -----
+
+?C_INITSEG                  ----- -----  ----- -----
+
+
+
+PUBLIC SYMBOLS OF MODULE:  .\build\Target 1\key_matrix_calculator (MAIN)
+
+
+      VALUE       CLASS    TYPE      PUBLIC SYMBOL NAME
+      =================================================
+      00000000H   NUMBER   ---       ?C?CODESEG
+      0100000EH   CODE     ---       ?C?LMUL
+      01000099H   CODE     ---       ?C?ULDIV
+      00000000H   NUMBER   ---       ?C?XDATASEG
+      01000253H   CODE     ---       ?C_START
+      01000000H   CODE     ---       ?C_STARTUP
+*DEL*:00000000H   CODE     ---       _KeyAction
+      0100032CH   CODE     ---       _LedScan
+*DEL*:00000000H   CODE     ---       _ShowNumber
+      00000034H   DATA     BYTE      cnt_opration
+      01000391H   CONST    ---       DecToHex
+*DEL*:00000000H   CODE     ---       DoCalculate
+      00000020H.0 BIT      BIT       flag_add
+      00000020H.1 BIT      BIT       flag_div
+      00000020H.4 BIT      BIT       flag_mul
+      00000020H.2 BIT      BIT       flag_res
+      00000020H.3 BIT      BIT       flag_sub
+      010002E7H   CODE     ---       InterruptTimer0
+      01000381H   CONST    ---       KeyCodeMap
+      *EXTERN*    CODE     ---       KeyDriver
+      0100012BH   CODE     ---       KeyScan
+      00000041H   DATA     ---       KeySta
+      00000039H   DATA     ---       LedBuf
+      01000371H   CONST    ---       LedChar
+      01000356H   CODE     ---       main
+      00000051H   DATA     DWORD     op
+      00000035H   DATA     DWORD     result
+
+
+
+UNRESOLVED EXTERNAL SYMBOLS:
+LX51 LINKER/LOCATER V4.66.97.0                                                        01/22/2022  15:15:58  PAGE 3
+
+
+   KeyDriver
+
+
+
+SYMBOL TABLE OF MODULE:  .\build\Target 1\key_matrix_calculator (MAIN)
+
+      VALUE       REP       CLASS    TYPE      SYMBOL NAME
+      ====================================================
+      ---         MODULE    ---      ---       MAIN
+      00000051H   PUBLIC    DATA     DWORD     op
+      00000041H   PUBLIC    DATA     ---       KeySta
+      00000020H.4 PUBLIC    BIT      BIT       flag_mul
+      00000020H.3 PUBLIC    BIT      BIT       flag_sub
+      00000020H.2 PUBLIC    BIT      BIT       flag_res
+      00000020H.1 PUBLIC    BIT      BIT       flag_div
+      00000039H   PUBLIC    DATA     ---       LedBuf
+      00000020H.0 PUBLIC    BIT      BIT       flag_add
+      00000035H   PUBLIC    DATA     DWORD     result
+      00000034H   PUBLIC    DATA     BYTE      cnt_opration
+      01000391H   PUBLIC    CONST    ---       DecToHex
+      01000381H   PUBLIC    CONST    ---       KeyCodeMap
+      01000371H   PUBLIC    CONST    ---       LedChar
+      010002E7H   PUBLIC    CODE     ---       InterruptTimer0
+      0100032CH   PUBLIC    CODE     ---       _LedScan
+      0100012BH   PUBLIC    CODE     ---       KeyScan
+      01000356H   PUBLIC    CODE     ---       main
+
+      01000356H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      0100012BH   BLOCK     CODE     ---       LVL=0
+      0100012BH   BLOCK     CODE     NEAR LAB  LVL=1
+      00000007H   SYMBOL    DATA     VOID      keycol
+      00000021H   SYMBOL    DATA     VOID      keyrow
+      00000022H   SYMBOL    DATA     VOID      keybuf
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      0100032CH   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010002E7H   BLOCK     CODE     ---       LVL=0
+      010002F6H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000032H   SYMBOL    DATA     VOID      idx
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      ---         MODULE    ---      ---       ?C_STARTUP
+      01000000H   PUBLIC    CODE     ---       ?C_STARTUP
+
+      ---         MODULE    ---      ---       ?C_INIT
+      01000253H   PUBLIC    CODE     ---       ?C_START
+
+      ---         MODULE    ---      ---       ?C?LMUL
+      0100000EH   PUBLIC    CODE     ---       ?C?LMUL
+
+      ---         MODULE    ---      ---       ?C?ULDIV
+      01000099H   PUBLIC    CODE     ---       ?C?ULDIV
+
+
+
+*** ERROR L127: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  KeyDriver
+    MODULE:  .\build\Target 1\main.o (MAIN)
+
+LX51 LINKER/LOCATER V4.66.97.0                                                        01/22/2022  15:15:58  PAGE 4
+
+
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  KeyDriver
+    MODULE:  .\build\Target 1\main.o (MAIN)
+    ADDRESS: 100036DH
+
+Program Size: data=61.5 xdata=0 const=40 code=873
+LX51 RUN COMPLETE.  0 WARNING(S),  2 ERROR(S)

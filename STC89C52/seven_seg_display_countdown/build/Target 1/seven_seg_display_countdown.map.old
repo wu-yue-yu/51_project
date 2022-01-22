@@ -1,0 +1,163 @@
+LX51 LINKER/LOCATER V4.66.97.0                                                          01/21/2022  15:19:04  PAGE 1
+
+
+LX51 LINKER/LOCATER V4.66.97.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\LX51.EXE .\build\Target 1\main.o, .\build\Target 1\STARTUP.o, C:\KEIL_V5\C51\LIB\C51S.LIB TO .\build\
+>> Target 1\seven_seg_display_countdown PRINT (.\build\Target 1\seven_seg_display_countdown.map) REMOVEUNUSED
+
+
+CPU MODE:     8051 MODE
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\build\Target 1\main.o (MAIN)
+         COMMENT TYPE 0: C51 V9.60.0.0
+  .\build\Target 1\STARTUP.o (?C_STARTUP)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULDIV)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+
+
+ACTIVE MEMORY CLASSES OF MODULE:  .\build\Target 1\seven_seg_display_countdown (MAIN)
+
+BASE        START       END         USED      MEMORY CLASS
+==========================================================
+C:000000H   C:000000H   C:00FFFFH   0002B8H   CODE
+I:000000H   I:000000H   I:00007FH   000024H   DATA
+C:000000H   C:000000H   C:00FFFFH   000010H   CONST
+I:000020H.0 I:000020H.0 I:00002FH.7 000000H.1 BIT
+I:000000H   I:000000H   I:0000FFH   000001H   IDATA
+
+
+MEMORY MAP OF MODULE:  .\build\Target 1\seven_seg_display_countdown (MAIN)
+
+
+START     STOP      LENGTH    ALIGN  RELOC    MEMORY CLASS   SEGMENT NAME
+=========================================================================
+
+* * * * * * * * * * *   D A T A   M E M O R Y   * * * * * * * * * * * * *
+000000H   000007H   000008H   ---    AT..     DATA           "REG BANK 0"
+000008H   000018H   000011H   BYTE   UNIT     DATA           _DATA_GROUP_
+000019H.0 00001FH.7 000007H.0 ---    ---      **GAP**
+000020H.0 000020H.0 000000H.1 BIT    UNIT     BIT            ?BI?MAIN
+000020H.1 000020H   000000H.7 ---    ---      **GAP**
+000021H   00002BH   00000BH   BYTE   UNIT     DATA           ?DT?MAIN
+00002CH   00002CH   000001H   BYTE   UNIT     IDATA          ?STACK
+
+* * * * * * * * * * *   C O D E   M E M O R Y   * * * * * * * * * * * * *
+000000H   000002H   000003H   ---    OFFS..   CODE           ?CO??C_STARTUP?0
+000003H   000016H   000014H   BYTE   UNIT     CODE           ?C_INITSEG
+000017H   00001AH   000004H   ---    ---      **GAP**
+00001BH   00001DH   000003H   BYTE   OFFS..   CODE           ?MAIN?0001B
+00001EH   0000EBH   0000CEH   BYTE   UNIT     CODE           ?C?LIB_CODE
+0000ECH   000177H   00008CH   BYTE   UNIT     CODE           ?PR?_LEDDISPLAY?MAIN
+000178H   000203H   00008CH   BYTE   UNIT     CODE           ?C_C51STARTUP
+000204H   00024DH   00004AH   BYTE   UNIT     CODE           ?PR?INTERRUPTTIMER1?MAIN
+00024EH   000291H   000044H   BYTE   UNIT     CODE           ?PR?MAIN?MAIN
+000292H   0002BBH   00002AH   BYTE   UNIT     CODE           ?PR?_LEDSCAN?MAIN
+0002BCH   0002CBH   000010H   BYTE   UNIT     CONST          ?CO?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   .\build\Target 1\seven_seg_display_countdown (MAIN)
+
+
+FUNCTION/MODULE              BIT_GROUP   DATA_GROUP 
+--> CALLED FUNCTION/MODULE  START  STOP  START  STOP
+LX51 LINKER/LOCATER V4.66.97.0                                                        01/21/2022  15:19:04  PAGE 2
+
+
+====================================================
+INTERRUPTTIMER1/MAIN        ----- -----  ----- -----
+  +--> _LEDSCAN/MAIN
+
+_LEDSCAN/MAIN               ----- -----  ----- -----
+
+*** NEW ROOT **************
+
+?C_C51STARTUP               ----- -----  ----- -----
+  +--> MAIN/MAIN
+  +--> ?C_INITSEG
+
+MAIN/MAIN                   ----- -----  0008H 000BH
+  +--> _LEDDISPLAY/MAIN
+
+_LEDDISPLAY/MAIN            ----- -----  000CH 0018H
+
+?C_INITSEG                  ----- -----  ----- -----
+
+
+
+PUBLIC SYMBOLS OF MODULE:  .\build\Target 1\seven_seg_display_countdown (MAIN)
+
+
+      VALUE       CLASS    TYPE      PUBLIC SYMBOL NAME
+      =================================================
+      00000000H   NUMBER   ---       ?C?CODESEG
+      0100005AH   CODE     ---       ?C?ULDIV
+      00000000H   NUMBER   ---       ?C?XDATASEG
+      010001BFH   CODE     ---       ?C_START
+      01000000H   CODE     ---       ?C_STARTUP
+      010000ECH   CODE     ---       _LedDisplay
+      01000292H   CODE     ---       _LedScan
+      00000020H.0 BIT      BIT       flag_1s
+      01000204H   CODE     ---       InterruptTimer1
+      00000024H   DATA     ---       LedBuf
+      010002BCH   CONST    ---       LedChar
+      0100024EH   CODE     ---       main
+
+
+
+SYMBOL TABLE OF MODULE:  .\build\Target 1\seven_seg_display_countdown (MAIN)
+
+      VALUE       REP       CLASS    TYPE      SYMBOL NAME
+      ====================================================
+      ---         MODULE    ---      ---       MAIN
+      00000024H   PUBLIC    DATA     ---       LedBuf
+      00000020H.0 PUBLIC    BIT      BIT       flag_1s
+      010002BCH   PUBLIC    CONST    ---       LedChar
+      01000204H   PUBLIC    CODE     ---       InterruptTimer1
+      01000292H   PUBLIC    CODE     ---       _LedScan
+      010000ECH   PUBLIC    CODE     ---       _LedDisplay
+      0100024EH   PUBLIC    CODE     ---       main
+
+      0100024EH   BLOCK     CODE     ---       LVL=0
+      0100024EH   BLOCK     CODE     NEAR LAB  LVL=1
+      00000008H   SYMBOL    DATA     VOID      sec
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010000ECH   BLOCK     CODE     ---       LVL=0
+      010000F4H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000010H   SYMBOL    DATA     VOID      i
+      00000011H   SYMBOL    DATA     VOID      buf
+      ---         BLOCKEND  ---      ---       LVL=1
+LX51 LINKER/LOCATER V4.66.97.0                                                        01/21/2022  15:19:04  PAGE 3
+
+
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000292H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000204H   BLOCK     CODE     ---       LVL=0
+      0100020FH   BLOCK     CODE     NEAR LAB  LVL=1
+      00000021H   SYMBOL    DATA     VOID      cnt
+      00000023H   SYMBOL    DATA     VOID      idx
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      ---         MODULE    ---      ---       ?C_STARTUP
+      01000000H   PUBLIC    CODE     ---       ?C_STARTUP
+
+      ---         MODULE    ---      ---       ?C_INIT
+      010001BFH   PUBLIC    CODE     ---       ?C_START
+
+      ---         MODULE    ---      ---       ?C?ULDIV
+      0100005AH   PUBLIC    CODE     ---       ?C?ULDIV
+
+Program Size: data=37.1 xdata=0 const=16 code=696
+LX51 RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

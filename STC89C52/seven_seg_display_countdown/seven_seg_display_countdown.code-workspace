@@ -1,0 +1,73 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.associations": {
+            ".eideignore": "ignore"
+        },
+        "files.autoGuessEncoding": true,
+        "[yaml]": {
+            "editor.insertSpaces": true,
+            "editor.tabSize": 4,
+            "editor.autoIndent": "advanced"
+        },
+        "C_Cpp.errorSquiggles": "Disabled"
+    },
+    "extensions": {
+        "recommendations": [
+            "cl.eide",
+            "keroc.hex-fmt",
+            "xiaoyongdong.srecord",
+            "hars.cppsnippets",
+            "zixuanwang.linkerscript",
+            "redhat.vscode-yaml",
+            "cl.stm8-debug"
+        ]
+    },
+    "launch": {
+        "configurations": [],
+        "compounds": []
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "build",
+                "type": "shell",
+                "command": "${command:eide.project.build}",
+                "group": "build",
+                "problemMatcher": "$gcc"
+            },
+            {
+                "label": "flash",
+                "type": "shell",
+                "command": "${command:eide.project.uploadToDevice}",
+                "group": "build",
+                "problemMatcher": []
+            },
+            {
+                "label": "build and flash",
+                "type": "shell",
+                "command": "${command:eide.project.buildAndFlash}",
+                "group": "build"
+            },
+            {
+                "label": "rebuild",
+                "type": "shell",
+                "command": "${command:eide.project.rebuild}",
+                "group": "build",
+                "problemMatcher": "$gcc"
+            },
+            {
+                "label": "clean",
+                "type": "shell",
+                "command": "${command:eide.project.clean}",
+                "group": "build",
+                "problemMatcher": []
+            }
+        ]
+    }
+}

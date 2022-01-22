@@ -1,0 +1,1349 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\build\Target 1\main.o
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.exe .\MAIN.C PRINT(.\build\Target 1\main.lst) OMF2 TABS(4) CODE NOCOND SYMBO
+                    -LS OPTIMIZE(8,SPEED) SMALL ROM(LARGE) INCDIR(C:\Keil_v5\C51\INC\STC;C:\Keil_v5\C51\INC) DEFINE(__UVISION_VERSION=526) OB
+                    -JECT(.\build\Target 1\main.o)
+
+line level    source
+
+   1          /*
+   2           * @Descripttion: 简易四则运算计算器（参与运算的数、最终结果和中间结果都只能�
+             -��自然数，不支持运算优先级判断，只能按照输入顺序依次计算）
+   3           * @Author: 五月雨
+   4           * @Date: 2022-01-21 15:33:38
+   5           * @LastEditors: 五月雨
+   6           * @LastEditTime: 2022-01-22 15:15:55
+   7           * @Board: 清翔51开发板
+   8           * @Chip: STC89C52
+   9           */
+  10          #include <STC89C5xRC.H>
+  11          
+  12          sbit SEG = P2^6;
+  13          sbit DIG = P2^7;
+  14          sbit KEY_COL_1 = P3^4;
+  15          sbit KEY_COL_2 = P3^5;
+  16          sbit KEY_COL_3 = P3^6;
+  17          sbit KEY_COL_4 = P3^7;
+  18          sbit KEY_ROW_1 = P3^0;
+  19          sbit KEY_ROW_2 = P3^1;
+  20          sbit KEY_ROW_3 = P3^2;
+  21          sbit KEY_ROW_4 = P3^3;
+  22          
+  23          unsigned char code LedChar[] = {        //数码管显示字符转换表
+  24              0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 
+  25              0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71
+  26          };
+  27          unsigned char LedBuf[] = {              //数码管显示缓冲区
+  28              0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+  29          };
+  30          unsigned char code KeyCodeMap[4][4] = { //按键映射
+  31              {0x31, 0x32, 0x33, 0x25},           /*  1    2    3    +  */
+  32              {0x34, 0x35, 0x36, 0x26},           /*  4    5    6    -  */
+  33              {0x37, 0x38, 0x39, 0x27},           /*  7    8    9    *  */
+  34              {0x30, 0x1B, 0x0D, 0x28}            /*  0    CE   =    /  */
+  35          };
+  36          unsigned char KeySta[4][4] = {          //按键当前状态存储
+  37              {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}
+  38          };
+  39          unsigned char code DecToHex[] = {       //数码管位置索引
+  40              0xFE, 0xFD, 0xFB, 0xF7, 0xEF, 0xDF, 0xBF, 0x7F
+  41          };
+  42          
+  43          //运算种类标记变量
+  44          bit flag_add = 0;
+  45          bit flag_sub = 0;
+  46          bit flag_mul = 0;
+  47          bit flag_div = 0;
+  48          bit flag_res = 0;
+  49          //以下变量定义为全局变量方便函数的编写
+  50          unsigned long result = 0;                //保存运算结果
+  51          unsigned long op = 0;                    //保存参与运算的数字
+  52          unsigned char cnt_opration = 0;          //记录运算次数，用于多次运算中判断是否需要计
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 2   
+
+             -算中间结果
+  53          
+  54          void ShowNumber(unsigned long num);
+  55          void DoCalculate();
+  56          void KeyAction(unsigned char keycode);
+  57          void KeyDriver();
+  58          void LedScan(unsigned char x);
+  59          void KeyScan();
+  60          
+  61          void main()
+  62          {
+  63   1          EA = 1;                     //使能总中断
+  64   1          TMOD = 0x01;                //使用定时器0的工作模式1
+  65   1          TH0 = 0xFC;                 //中断间隔时间为1ms
+  66   1          TL0 = 0x67;
+  67   1          ET0 = 1;                    //使能T0中断
+  68   1          TR0 = 1;                    //开启T0
+  69   1          LedBuf[7] = LedChar[0];     //上电显示0
+  70   1      
+  71   1          while (1)
+  72   1          {
+  73   2              // KeyDriver();
+  74   2          }
+  75   1      }
+  76          
+  77          /* 将一个无符号长整形的数字显示到数码管上，num为待显示数字 */
+  78          void ShowNumber(unsigned long num)
+  79          {
+  80   1          signed char i;              //注意使用有符号类型防止溢出
+  81   1          unsigned char buf[8];       //显示转换缓冲区
+  82   1          for(i = 7; i >= 0; i--)     //将num转换为数组表示
+  83   1          {
+  84   2              buf[i] = num % 10;
+  85   2              num /= 10;
+  86   2          }
+  87   1          for(i = 0; i < 7; i++)      //去除前缀0
+  88   1          {
+  89   2              if(buf[i] == 0)
+  90   2                  LedBuf[i] = 0x00;
+  91   2              else
+  92   2                  break;
+  93   2          }
+  94   1          for( ; i <= 7; i++)         //剩余低位转换为数码管显示字符
+  95   1          {
+  96   2              LedBuf[i] = LedChar[buf[i]];
+  97   2          }
+  98   1      }
+  99          
+ 100          /* 运算执行函数，根据运算种类标记变量来执行 */
+ 101          void DoCalculate()
+ 102          {
+ 103   1          if(flag_add)
+ 104   1          {
+ 105   2              result += op;
+ 106   2              flag_add = 0;
+ 107   2          }
+ 108   1          else if(flag_sub)
+ 109   1          {
+ 110   2              result -= op;
+ 111   2              flag_sub = 0;
+ 112   2          }
+ 113   1          else if(flag_mul)
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 3   
+
+ 114   1          {
+ 115   2              result *= op;
+ 116   2              flag_mul = 0;
+ 117   2          }
+ 118   1          else if(flag_div)
+ 119   1          {
+ 120   2              result /= op;
+ 121   2              flag_div = 0;
+ 122   2          }
+ 123   1      }
+ 124          
+ 125          /* 按键动作函数，根据键码执行相应的操作，keycode为按键键码 */
+ 126          void KeyAction(unsigned char keycode)
+ 127          {
+ 128   1          if((keycode >= 0x30) && (keycode <= 0x39))  //输入0~9的数字
+ 129   1          {
+ 130   2              op = (op * 10) + (keycode - 0x30);
+ 131   2              ShowNumber(op);
+ 132   2          }
+ 133   1          else if(keycode == 0x25)    //加法运算
+ 134   1          {
+ 135   2              if(cnt_opration > 0)    //若式子中运算次数大于一，先进行一次运算
+ 136   2              {
+ 137   3                  DoCalculate();      //得到的运算结果用于进行下一次运算
+ 138   3                  cnt_opration--;
+ 139   3              }
+ 140   2              else
+ 141   2              {
+ 142   3                  result = op;        //将op的值存储到result中，便于第二个运算数的输入
+ 143   3              } 
+ 144   2              flag_add = 1;           //标记有一次加运算需要执行
+ 145   2              cnt_opration++;         //等待执行的运算数量加一
+ 146   2              op = 0;                 //清零op变量，以存储下一个运算数的输入
+ 147   2          }
+ 148   1          else if(keycode == 0x26)    //减法运算
+ 149   1          {
+ 150   2              if(cnt_opration > 0)
+ 151   2              {
+ 152   3                  DoCalculate();
+ 153   3                  cnt_opration--;
+ 154   3              }
+ 155   2              else
+ 156   2              {
+ 157   3                  result = op;
+ 158   3              } 
+ 159   2              flag_sub = 1;
+ 160   2              cnt_opration++;
+ 161   2              op = 0; 
+ 162   2          }
+ 163   1          else if(keycode == 0x27)    //乘法运算
+ 164   1          {
+ 165   2              if(cnt_opration > 0)
+ 166   2              {
+ 167   3                  DoCalculate();
+ 168   3                  cnt_opration--;
+ 169   3              }
+ 170   2              else
+ 171   2              {
+ 172   3                  result = op;
+ 173   3              } 
+ 174   2              flag_mul = 1;
+ 175   2              cnt_opration++;
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 4   
+
+ 176   2              op = 0;
+ 177   2          }
+ 178   1          else if(keycode == 0x28)    //除法运算
+ 179   1          {
+ 180   2              if(cnt_opration > 0)
+ 181   2              {
+ 182   3                  DoCalculate();
+ 183   3                  cnt_opration--;
+ 184   3              }
+ 185   2              else
+ 186   2              {
+ 187   3                  result = op;
+ 188   3              } 
+ 189   2              flag_div = 1;
+ 190   2              cnt_opration++;
+ 191   2              op = 0;
+ 192   2          }
+ 193   1          else if(keycode == 0x0D)    //等号
+ 194   1          {
+ 195   2              DoCalculate();
+ 196   2              ShowNumber(result);
+ 197   2              result = 0;
+ 198   2              cnt_opration = 0;
+ 199   2              op = 0;
+ 200   2          }
+ 201   1          else if (keycode == 0x1B)   //标准计算器中的CE操作
+ 202   1          {
+ 203   2              op = 0;
+ 204   2              ShowNumber(op);
+ 205   2          }
+ 206   1      }
+ 207          
+ 208          /* 按键驱动函数，检测按键动作，调度相应动作函数 */
+ 209          // void KeyDriver()
+ 210          // {
+ 211          //     unsigned char i, j;
+ 212          //     static unsigned char backup[4][4] = {    //按键状态备份，保存前一次的值
+ 213          //         {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}
+ 214          //     };
+ 215          
+ 216          //     //矩阵键盘按键状态检测
+ 217          //     for(i = 0; i < 4; i++)
+ 218          //     {
+ 219          //         for(j = 0; j < 4; j++)
+ 220          //         {
+ 221          //             if(backup[i][j] != KeySta[i][j])
+ 222          //             {
+ 223          //                 if(backup[i][j] != 0)       //若该按键按下
+ 224          //                 {
+ 225          //                     KeyAction(KeyCodeMap[i][j]);
+ 226          //                 }
+ 227          //                 backup[i][j] = KeySta[i][j];
+ 228          //             }
+ 229          //         }
+ 230          //     }
+ 231          // }
+ 232          
+ 233          /* 按键扫描函数，需要在定时中断中调用 */
+ 234          void KeyScan()
+ 235          {
+ 236   1          unsigned char keycol;                                    //矩阵按键扫描列索引
+ 237   1          static unsigned char keyrow = 0;                         //矩阵按键扫描行索引
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 5   
+
+ 238   1          static unsigned char keybuf[4][4] = {                    //矩阵按键状态缓冲区
+ 239   1              {0xFF, 0xFF, 0xFF, 0xFF}, {0xFF, 0xFF, 0xFF, 0xFF},
+ 240   1              {0xFF, 0xFF, 0xFF, 0xFF}, {0xFF, 0xFF, 0xFF, 0xFF}
+ 241   1          };
+ 242   1      
+ 243   1          //将当前行的每个按键状态存入缓冲区中
+ 244   1          keybuf[keyrow][0] = (keybuf[keyrow][0] << 1) | KEY_COL_1;
+ 245   1          keybuf[keyrow][1] = (keybuf[keyrow][1] << 1) | KEY_COL_2;
+ 246   1          keybuf[keyrow][2] = (keybuf[keyrow][2] << 1) | KEY_COL_3;
+ 247   1          keybuf[keyrow][3] = (keybuf[keyrow][3] << 1) | KEY_COL_4;
+ 248   1      
+ 249   1          //由于机械按键的抖动时间一般在10ms内
+ 250   1          //此处扫描针对于每个按键连续采样四次，采样时间为1ms
+ 251   1          //由于每次中断只扫描一行，下列判断成立的条件为
+ 252   1          //当一个按键连续16ms保持按下或弹起，则可认为按键就是按下或弹起状态
+ 253   1          //这样既检测到了按键状态，又能达到去抖效果
+ 254   1          for(keycol = 0; keycol < 4; keycol++)
+ 255   1          {
+ 256   2              if((keybuf[keyrow][keycol] & 0x0F) == 0x00)          //按键按下
+ 257   2                  KeySta[keyrow][keycol] = 0;
+ 258   2              else if((keybuf[keyrow][keycol] & 0x0F) == 0x0F)     //按键弹起
+ 259   2                  KeySta[keyrow][keycol] = 1;
+ 260   2          }
+ 261   1      
+ 262   1          keyrow++;                                                //准备进行下一行的扫描
+ 263   1          keyrow = keyrow & 0x03;                                  //控制行索引在0~3以内变化
+ 264   1          switch(keyrow)                                           //根据行索引改变电平，以进行对�
+             -��某行按键的扫描
+ 265   1          {
+ 266   2              case 0: KEY_ROW_4 = 1; KEY_ROW_1 = 0; break;
+ 267   2              case 1: KEY_ROW_1 = 1; KEY_ROW_2 = 0; break;
+ 268   2              case 2: KEY_ROW_2 = 1; KEY_ROW_3 = 0; break;
+ 269   2              case 3: KEY_ROW_3 = 1; KEY_ROW_4 = 0; break;
+ 270   2              default: break;
+ 271   2          }
+ 272   1      }
+ 273          
+ 274          /* 数码管动态扫描刷新显示函数，需在定时器中断中调用 */
+ 275          void LedScan(unsigned char x)
+ 276          {
+ 277   1          P0 = 0x00;      //防止产生交替重影
+ 278   1          SEG = 1;
+ 279   1          SEG = 0;
+ 280   1      
+ 281   1          P0 = 0xFF;      //位消隐
+ 282   1          DIG = 1;
+ 283   1          P0 &= ~(1 << x);
+ 284   1          DIG = 0;
+ 285   1          
+ 286   1          P0 = 0x00;      //段消隐
+ 287   1          SEG = 1;
+ 288   1          P0 = LedBuf[x];
+ 289   1          SEG = 0;
+ 290   1      }
+ 291          
+ 292          /* T0中断服务函数，用于数码管显示扫描与按键扫描 */
+ 293          void InterruptTimer0() interrupt 1
+ 294          {
+ 295   1          static unsigned idx = 0;                        //数码管扫描位索引
+ 296   1          
+ 297   1          TH0 = 0xFC;                                     //T0值重载
+ 298   1          TL0 = 0x67;
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 6   
+
+ 299   1      
+ 300   1          LedScan(idx);
+ 301   1          if(idx < 7)
+ 302   1              idx++;
+ 303   1          else 
+ 304   1              idx = 0;
+ 305   1          KeyScan();
+ 306   1      }
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 7   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION main (BEGIN)
+                                           ; SOURCE LINE # 61
+                                           ; SOURCE LINE # 62
+                                           ; SOURCE LINE # 63
+0000 D2AF              SETB    EA
+                                           ; SOURCE LINE # 64
+0002 758901            MOV     TMOD,#01H
+                                           ; SOURCE LINE # 65
+0005 758CFC            MOV     TH0,#0FCH
+                                           ; SOURCE LINE # 66
+0008 758A67            MOV     TL0,#067H
+                                           ; SOURCE LINE # 67
+000B D2A9              SETB    ET0
+                                           ; SOURCE LINE # 68
+000D D28C              SETB    TR0
+                                           ; SOURCE LINE # 69
+000F 900000      R     MOV     DPTR,#LedChar
+0012 E4                CLR     A
+0013 93                MOVC    A,@A+DPTR
+0014 F500        R     MOV     LedBuf+07H,A
+0016         ?C0001:
+                                           ; SOURCE LINE # 71
+                                           ; SOURCE LINE # 72
+                                           ; SOURCE LINE # 74
+0016 80FE              SJMP    ?C0001
+             ; FUNCTION main (END)
+
+             ; FUNCTION _ShowNumber (BEGIN)
+                                           ; SOURCE LINE # 78
+0000 8F00        R     MOV     num+03H,R7
+0002 8E00        R     MOV     num+02H,R6
+0004 8D00        R     MOV     num+01H,R5
+0006 8C00        R     MOV     num,R4
+                                           ; SOURCE LINE # 79
+                                           ; SOURCE LINE # 82
+0008 750007      R     MOV     i,#07H
+000B         ?C0004:
+000B AF00        R     MOV     R7,i
+000D EF                MOV     A,R7
+000E 33                RLC     A
+000F 95E0              SUBB    A,ACC
+0011 C3                CLR     C
+0012 6480              XRL     A,#080H
+0014 9480              SUBB    A,#080H
+0016 4037              JC      ?C0005
+                                           ; SOURCE LINE # 83
+                                           ; SOURCE LINE # 84
+0018 E4                CLR     A
+0019 7B0A              MOV     R3,#0AH
+001B FA                MOV     R2,A
+001C F9                MOV     R1,A
+001D F8                MOV     R0,A
+001E AF00        R     MOV     R7,num+03H
+0020 AE00        R     MOV     R6,num+02H
+0022 AD00        R     MOV     R5,num+01H
+0024 AC00        R     MOV     R4,num
+0026 120000      E     LCALL   ?C?ULDIV
+0029 AF03              MOV     R7,AR3
+002B 7400        R     MOV     A,#LOW buf
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 8   
+
+002D 2500        R     ADD     A,i
+002F F8                MOV     R0,A
+0030 A607              MOV     @R0,AR7
+                                           ; SOURCE LINE # 85
+0032 AF00        R     MOV     R7,num+03H
+0034 AE00        R     MOV     R6,num+02H
+0036 AD00        R     MOV     R5,num+01H
+0038 AC00        R     MOV     R4,num
+003A E4                CLR     A
+003B 7B0A              MOV     R3,#0AH
+003D FA                MOV     R2,A
+003E F9                MOV     R1,A
+003F F8                MOV     R0,A
+0040 120000      E     LCALL   ?C?ULDIV
+0043 8F00        R     MOV     num+03H,R7
+0045 8E00        R     MOV     num+02H,R6
+0047 8D00        R     MOV     num+01H,R5
+0049 8C00        R     MOV     num,R4
+                                           ; SOURCE LINE # 86
+004B 1500        R     DEC     i
+004D 80BC              SJMP    ?C0004
+004F         ?C0005:
+                                           ; SOURCE LINE # 87
+004F E4                CLR     A
+0050 F500        R     MOV     i,A
+0052         ?C0007:
+0052 AF00        R     MOV     R7,i
+0054 EF                MOV     A,R7
+0055 33                RLC     A
+0056 95E0              SUBB    A,ACC
+0058 FE                MOV     R6,A
+0059 C3                CLR     C
+005A EF                MOV     A,R7
+005B 9407              SUBB    A,#07H
+005D EE                MOV     A,R6
+005E 6480              XRL     A,#080H
+0060 9480              SUBB    A,#080H
+0062 5011              JNC     ?C0012
+                                           ; SOURCE LINE # 88
+                                           ; SOURCE LINE # 89
+0064 7400        R     MOV     A,#LOW buf
+0066 2F                ADD     A,R7
+0067 F8                MOV     R0,A
+0068 E6                MOV     A,@R0
+0069 700A              JNZ     ?C0012
+                                           ; SOURCE LINE # 90
+006B 7400        R     MOV     A,#LOW LedBuf
+006D 2F                ADD     A,R7
+006E F8                MOV     R0,A
+006F E4                CLR     A
+0070 F6                MOV     @R0,A
+                                           ; SOURCE LINE # 92
+                                           ; SOURCE LINE # 93
+0071 0500        R     INC     i
+0073 80DD              SJMP    ?C0007
+                                           ; SOURCE LINE # 94
+0075         ?C0012:
+0075 AF00        R     MOV     R7,i
+0077 EF                MOV     A,R7
+0078 33                RLC     A
+0079 95E0              SUBB    A,ACC
+007B FE                MOV     R6,A
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 9   
+
+007C D3                SETB    C
+007D EF                MOV     A,R7
+007E 9407              SUBB    A,#07H
+0080 EE                MOV     A,R6
+0081 6480              XRL     A,#080H
+0083 9480              SUBB    A,#080H
+0085 5015              JNC     ?C0015
+                                           ; SOURCE LINE # 95
+                                           ; SOURCE LINE # 96
+0087 7400        R     MOV     A,#LOW buf
+0089 2F                ADD     A,R7
+008A F8                MOV     R0,A
+008B E6                MOV     A,@R0
+008C 900000      R     MOV     DPTR,#LedChar
+008F 93                MOVC    A,@A+DPTR
+0090 FF                MOV     R7,A
+0091 7400        R     MOV     A,#LOW LedBuf
+0093 2500        R     ADD     A,i
+0095 F8                MOV     R0,A
+0096 A607              MOV     @R0,AR7
+                                           ; SOURCE LINE # 97
+0098 0500        R     INC     i
+009A 80D9              SJMP    ?C0012
+                                           ; SOURCE LINE # 98
+009C         ?C0015:
+009C 22                RET     
+             ; FUNCTION _ShowNumber (END)
+
+             ; FUNCTION DoCalculate (BEGIN)
+                                           ; SOURCE LINE # 101
+                                           ; SOURCE LINE # 102
+                                           ; SOURCE LINE # 103
+0000 30001B            JNB     flag_add,?C0016
+                                           ; SOURCE LINE # 104
+                                           ; SOURCE LINE # 105
+0003 E500        R     MOV     A,result+03H
+0005 2500        R     ADD     A,op+03H
+0007 F500        R     MOV     result+03H,A
+0009 E500        R     MOV     A,result+02H
+000B 3500        R     ADDC    A,op+02H
+000D F500        R     MOV     result+02H,A
+000F E500        R     MOV     A,result+01H
+0011 3500        R     ADDC    A,op+01H
+0013 F500        R     MOV     result+01H,A
+0015 E500        R     MOV     A,result
+0017 3500        R     ADDC    A,op
+0019 F500        R     MOV     result,A
+                                           ; SOURCE LINE # 106
+001B C200        R     CLR     flag_add
+                                           ; SOURCE LINE # 107
+001D 22                RET     
+001E         ?C0016:
+                                           ; SOURCE LINE # 108
+001E 30001C            JNB     flag_sub,?C0018
+                                           ; SOURCE LINE # 109
+                                           ; SOURCE LINE # 110
+0021 C3                CLR     C
+0022 E500        R     MOV     A,result+03H
+0024 9500        R     SUBB    A,op+03H
+0026 F500        R     MOV     result+03H,A
+0028 E500        R     MOV     A,result+02H
+002A 9500        R     SUBB    A,op+02H
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 10  
+
+002C F500        R     MOV     result+02H,A
+002E E500        R     MOV     A,result+01H
+0030 9500        R     SUBB    A,op+01H
+0032 F500        R     MOV     result+01H,A
+0034 E500        R     MOV     A,result
+0036 9500        R     SUBB    A,op
+0038 F500        R     MOV     result,A
+                                           ; SOURCE LINE # 111
+003A C200        R     CLR     flag_sub
+                                           ; SOURCE LINE # 112
+003C 22                RET     
+003D         ?C0018:
+                                           ; SOURCE LINE # 113
+003D 30001E            JNB     flag_mul,?C0020
+                                           ; SOURCE LINE # 114
+                                           ; SOURCE LINE # 115
+0040 AF00        R     MOV     R7,result+03H
+0042 AE00        R     MOV     R6,result+02H
+0044 AD00        R     MOV     R5,result+01H
+0046 AC00        R     MOV     R4,result
+0048 AB00        R     MOV     R3,op+03H
+004A AA00        R     MOV     R2,op+02H
+004C A900        R     MOV     R1,op+01H
+004E A800        R     MOV     R0,op
+0050 120000      E     LCALL   ?C?LMUL
+0053 8F00        R     MOV     result+03H,R7
+0055 8E00        R     MOV     result+02H,R6
+0057 8D00        R     MOV     result+01H,R5
+0059 8C00        R     MOV     result,R4
+                                           ; SOURCE LINE # 116
+005B C200        R     CLR     flag_mul
+                                           ; SOURCE LINE # 117
+005D 22                RET     
+005E         ?C0020:
+                                           ; SOURCE LINE # 118
+005E 30001D            JNB     flag_div,?C0023
+                                           ; SOURCE LINE # 119
+                                           ; SOURCE LINE # 120
+0061 AF00        R     MOV     R7,result+03H
+0063 AE00        R     MOV     R6,result+02H
+0065 AD00        R     MOV     R5,result+01H
+0067 AC00        R     MOV     R4,result
+0069 AB00        R     MOV     R3,op+03H
+006B AA00        R     MOV     R2,op+02H
+006D A900        R     MOV     R1,op+01H
+006F A800        R     MOV     R0,op
+0071 120000      E     LCALL   ?C?ULDIV
+0074 8F00        R     MOV     result+03H,R7
+0076 8E00        R     MOV     result+02H,R6
+0078 8D00        R     MOV     result+01H,R5
+007A 8C00        R     MOV     result,R4
+                                           ; SOURCE LINE # 121
+007C C200        R     CLR     flag_div
+                                           ; SOURCE LINE # 122
+                                           ; SOURCE LINE # 123
+007E         ?C0023:
+007E 22                RET     
+             ; FUNCTION DoCalculate (END)
+
+             ; FUNCTION _KeyAction (BEGIN)
+                                           ; SOURCE LINE # 126
+0000 8F00        R     MOV     keycode,R7
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 11  
+
+                                           ; SOURCE LINE # 127
+                                           ; SOURCE LINE # 128
+0002 7E00              MOV     R6,#00H
+0004 C3                CLR     C
+0005 EF                MOV     A,R7
+0006 9430              SUBB    A,#030H
+0008 7480              MOV     A,#080H
+000A 9480              SUBB    A,#080H
+000C 404A              JC      ?C0024
+000E D3                SETB    C
+000F EF                MOV     A,R7
+0010 9439              SUBB    A,#039H
+0012 7480              MOV     A,#080H
+0014 9480              SUBB    A,#080H
+0016 5040              JNC     ?C0024
+                                           ; SOURCE LINE # 129
+                                           ; SOURCE LINE # 130
+0018 E4                CLR     A
+0019 7F0A              MOV     R7,#0AH
+001B FD                MOV     R5,A
+001C FC                MOV     R4,A
+001D AB00        R     MOV     R3,op+03H
+001F AA00        R     MOV     R2,op+02H
+0021 A900        R     MOV     R1,op+01H
+0023 A800        R     MOV     R0,op
+0025 120000      E     LCALL   ?C?LMUL
+0028 A804              MOV     R0,AR4
+002A A905              MOV     R1,AR5
+002C AA06              MOV     R2,AR6
+002E AB07              MOV     R3,AR7
+0030 E500        R     MOV     A,keycode
+0032 24D0              ADD     A,#0D0H
+0034 FF                MOV     R7,A
+0035 E4                CLR     A
+0036 34FF              ADDC    A,#0FFH
+0038 FE                MOV     R6,A
+0039 33                RLC     A
+003A 95E0              SUBB    A,ACC
+003C FD                MOV     R5,A
+003D FC                MOV     R4,A
+003E EB                MOV     A,R3
+003F 2F                ADD     A,R7
+0040 F500        R     MOV     op+03H,A
+0042 EA                MOV     A,R2
+0043 3E                ADDC    A,R6
+0044 F500        R     MOV     op+02H,A
+0046 E9                MOV     A,R1
+0047 3D                ADDC    A,R5
+0048 F500        R     MOV     op+01H,A
+004A E8                MOV     A,R0
+004B 3C                ADDC    A,R4
+004C F500        R     MOV     op,A
+                                           ; SOURCE LINE # 131
+004E AF00        R     MOV     R7,op+03H
+0050 AE00        R     MOV     R6,op+02H
+0052 AD00        R     MOV     R5,op+01H
+0054 FC                MOV     R4,A
+                                           ; SOURCE LINE # 132
+0055 020000      R     LJMP    ?C0066
+0058         ?C0024:
+                                           ; SOURCE LINE # 133
+0058 E500        R     MOV     A,keycode
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 12  
+
+005A 6425              XRL     A,#025H
+005C 7022              JNZ     ?C0026
+                                           ; SOURCE LINE # 134
+                                           ; SOURCE LINE # 135
+005E D3                SETB    C
+005F E500        R     MOV     A,cnt_opration
+0061 9400              SUBB    A,#00H
+0063 7480              MOV     A,#080H
+0065 9480              SUBB    A,#080H
+0067 4007              JC      ?C0027
+                                           ; SOURCE LINE # 136
+                                           ; SOURCE LINE # 137
+0069 120000      R     LCALL   DoCalculate
+                                           ; SOURCE LINE # 138
+006C 1500        R     DEC     cnt_opration
+                                           ; SOURCE LINE # 139
+006E 800C              SJMP    ?C0028
+0070         ?C0027:
+                                           ; SOURCE LINE # 141
+                                           ; SOURCE LINE # 142
+0070 850000      R     MOV     result+03H,op+03H
+0073 850000      R     MOV     result+02H,op+02H
+0076 850000      R     MOV     result+01H,op+01H
+0079 850000      R     MOV     result,op
+                                           ; SOURCE LINE # 143
+007C         ?C0028:
+                                           ; SOURCE LINE # 144
+007C D200        R     SETB    flag_add
+                                           ; SOURCE LINE # 145
+                                           ; SOURCE LINE # 146
+                                           ; SOURCE LINE # 147
+007E 8076              SJMP    ?C0069
+0080         ?C0026:
+                                           ; SOURCE LINE # 148
+0080 E500        R     MOV     A,keycode
+0082 6426              XRL     A,#026H
+0084 7022              JNZ     ?C0030
+                                           ; SOURCE LINE # 149
+                                           ; SOURCE LINE # 150
+0086 D3                SETB    C
+0087 E500        R     MOV     A,cnt_opration
+0089 9400              SUBB    A,#00H
+008B 7480              MOV     A,#080H
+008D 9480              SUBB    A,#080H
+008F 4007              JC      ?C0031
+                                           ; SOURCE LINE # 151
+                                           ; SOURCE LINE # 152
+0091 120000      R     LCALL   DoCalculate
+                                           ; SOURCE LINE # 153
+0094 1500        R     DEC     cnt_opration
+                                           ; SOURCE LINE # 154
+0096 800C              SJMP    ?C0032
+0098         ?C0031:
+                                           ; SOURCE LINE # 156
+                                           ; SOURCE LINE # 157
+0098 850000      R     MOV     result+03H,op+03H
+009B 850000      R     MOV     result+02H,op+02H
+009E 850000      R     MOV     result+01H,op+01H
+00A1 850000      R     MOV     result,op
+                                           ; SOURCE LINE # 158
+00A4         ?C0032:
+                                           ; SOURCE LINE # 159
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 13  
+
+00A4 D200        R     SETB    flag_sub
+                                           ; SOURCE LINE # 160
+00A6         ?C0067:
+                                           ; SOURCE LINE # 161
+                                           ; SOURCE LINE # 162
+00A6 804E              SJMP    ?C0069
+00A8         ?C0030:
+                                           ; SOURCE LINE # 163
+00A8 E500        R     MOV     A,keycode
+00AA 6427              XRL     A,#027H
+00AC 7022              JNZ     ?C0034
+                                           ; SOURCE LINE # 164
+                                           ; SOURCE LINE # 165
+00AE D3                SETB    C
+00AF E500        R     MOV     A,cnt_opration
+00B1 9400              SUBB    A,#00H
+00B3 7480              MOV     A,#080H
+00B5 9480              SUBB    A,#080H
+00B7 4007              JC      ?C0035
+                                           ; SOURCE LINE # 166
+                                           ; SOURCE LINE # 167
+00B9 120000      R     LCALL   DoCalculate
+                                           ; SOURCE LINE # 168
+00BC 1500        R     DEC     cnt_opration
+                                           ; SOURCE LINE # 169
+00BE 800C              SJMP    ?C0036
+00C0         ?C0035:
+                                           ; SOURCE LINE # 171
+                                           ; SOURCE LINE # 172
+00C0 850000      R     MOV     result+03H,op+03H
+00C3 850000      R     MOV     result+02H,op+02H
+00C6 850000      R     MOV     result+01H,op+01H
+00C9 850000      R     MOV     result,op
+                                           ; SOURCE LINE # 173
+00CC         ?C0036:
+                                           ; SOURCE LINE # 174
+00CC D200        R     SETB    flag_mul
+                                           ; SOURCE LINE # 175
+00CE         ?C0068:
+                                           ; SOURCE LINE # 176
+                                           ; SOURCE LINE # 177
+00CE 8026              SJMP    ?C0069
+00D0         ?C0034:
+                                           ; SOURCE LINE # 178
+00D0 E500        R     MOV     A,keycode
+00D2 6428              XRL     A,#028H
+00D4 7025              JNZ     ?C0038
+                                           ; SOURCE LINE # 179
+                                           ; SOURCE LINE # 180
+00D6 D3                SETB    C
+00D7 E500        R     MOV     A,cnt_opration
+00D9 9400              SUBB    A,#00H
+00DB 7480              MOV     A,#080H
+00DD 9480              SUBB    A,#080H
+00DF 4007              JC      ?C0039
+                                           ; SOURCE LINE # 181
+                                           ; SOURCE LINE # 182
+00E1 120000      R     LCALL   DoCalculate
+                                           ; SOURCE LINE # 183
+00E4 1500        R     DEC     cnt_opration
+                                           ; SOURCE LINE # 184
+00E6 800C              SJMP    ?C0040
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 14  
+
+00E8         ?C0039:
+                                           ; SOURCE LINE # 186
+                                           ; SOURCE LINE # 187
+00E8 850000      R     MOV     result+03H,op+03H
+00EB 850000      R     MOV     result+02H,op+02H
+00EE 850000      R     MOV     result+01H,op+01H
+00F1 850000      R     MOV     result,op
+                                           ; SOURCE LINE # 188
+00F4         ?C0040:
+                                           ; SOURCE LINE # 189
+00F4 D200        R     SETB    flag_div
+                                           ; SOURCE LINE # 190
+00F6         ?C0069:
+00F6 0500        R     INC     cnt_opration
+                                           ; SOURCE LINE # 191
+00F8 E4                CLR     A
+                                           ; SOURCE LINE # 192
+00F9 801F              SJMP    ?C0070
+00FB         ?C0038:
+                                           ; SOURCE LINE # 193
+00FB E500        R     MOV     A,keycode
+00FD 640D              XRL     A,#0DH
+00FF 7022              JNZ     ?C0042
+                                           ; SOURCE LINE # 194
+                                           ; SOURCE LINE # 195
+0101 120000      R     LCALL   DoCalculate
+                                           ; SOURCE LINE # 196
+0104 AF00        R     MOV     R7,result+03H
+0106 AE00        R     MOV     R6,result+02H
+0108 AD00        R     MOV     R5,result+01H
+010A AC00        R     MOV     R4,result
+010C 120000      R     LCALL   _ShowNumber
+                                           ; SOURCE LINE # 197
+010F E4                CLR     A
+0110 F500        R     MOV     result+03H,A
+0112 F500        R     MOV     result+02H,A
+0114 F500        R     MOV     result+01H,A
+0116 F500        R     MOV     result,A
+                                           ; SOURCE LINE # 198
+0118 F500        R     MOV     cnt_opration,A
+                                           ; SOURCE LINE # 199
+011A         ?C0070:
+011A F500        R     MOV     op+03H,A
+011C F500        R     MOV     op+02H,A
+011E F500        R     MOV     op+01H,A
+0120 F500        R     MOV     op,A
+                                           ; SOURCE LINE # 200
+0122 22                RET     
+0123         ?C0042:
+                                           ; SOURCE LINE # 201
+0123 E500        R     MOV     A,keycode
+0125 641B              XRL     A,#01BH
+0127 7013              JNZ     ?C0045
+                                           ; SOURCE LINE # 202
+                                           ; SOURCE LINE # 203
+0129 F500        R     MOV     op+03H,A
+012B F500        R     MOV     op+02H,A
+012D F500        R     MOV     op+01H,A
+012F F500        R     MOV     op,A
+                                           ; SOURCE LINE # 204
+0131 AF00        R     MOV     R7,op+03H
+0133 AE00        R     MOV     R6,op+02H
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 15  
+
+0135 AD00        R     MOV     R5,op+01H
+0137 AC00        R     MOV     R4,op
+0139         ?C0066:
+0139 120000      R     LCALL   _ShowNumber
+                                           ; SOURCE LINE # 205
+                                           ; SOURCE LINE # 206
+013C         ?C0045:
+013C 22                RET     
+             ; FUNCTION _KeyAction (END)
+
+             ; FUNCTION KeyScan (BEGIN)
+                                           ; SOURCE LINE # 234
+                                           ; SOURCE LINE # 235
+                                           ; SOURCE LINE # 244
+0000 E500        R     MOV     A,keyrow
+0002 25E0              ADD     A,ACC
+0004 25E0              ADD     A,ACC
+0006 2400        R     ADD     A,#LOW keybuf
+0008 F8                MOV     R0,A
+0009 E6                MOV     A,@R0
+000A 25E0              ADD     A,ACC
+000C FF                MOV     R7,A
+000D A2B4              MOV     C,KEY_COL_1
+000F E4                CLR     A
+0010 33                RLC     A
+0011 4F                ORL     A,R7
+0012 FF                MOV     R7,A
+0013 E500        R     MOV     A,keyrow
+0015 25E0              ADD     A,ACC
+0017 25E0              ADD     A,ACC
+0019 2400        R     ADD     A,#LOW keybuf
+001B F8                MOV     R0,A
+001C A607              MOV     @R0,AR7
+                                           ; SOURCE LINE # 245
+001E E500        R     MOV     A,keyrow
+0020 25E0              ADD     A,ACC
+0022 25E0              ADD     A,ACC
+0024 2400        R     ADD     A,#LOW keybuf+01H
+0026 F8                MOV     R0,A
+0027 E6                MOV     A,@R0
+0028 25E0              ADD     A,ACC
+002A FF                MOV     R7,A
+002B A2B5              MOV     C,KEY_COL_2
+002D E4                CLR     A
+002E 33                RLC     A
+002F 4F                ORL     A,R7
+0030 FF                MOV     R7,A
+0031 E500        R     MOV     A,keyrow
+0033 25E0              ADD     A,ACC
+0035 25E0              ADD     A,ACC
+0037 2400        R     ADD     A,#LOW keybuf+01H
+0039 F8                MOV     R0,A
+003A A607              MOV     @R0,AR7
+                                           ; SOURCE LINE # 246
+003C E500        R     MOV     A,keyrow
+003E 25E0              ADD     A,ACC
+0040 25E0              ADD     A,ACC
+0042 2400        R     ADD     A,#LOW keybuf+02H
+0044 F8                MOV     R0,A
+0045 E6                MOV     A,@R0
+0046 25E0              ADD     A,ACC
+0048 FF                MOV     R7,A
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 16  
+
+0049 A2B6              MOV     C,KEY_COL_3
+004B E4                CLR     A
+004C 33                RLC     A
+004D 4F                ORL     A,R7
+004E FF                MOV     R7,A
+004F E500        R     MOV     A,keyrow
+0051 25E0              ADD     A,ACC
+0053 25E0              ADD     A,ACC
+0055 2400        R     ADD     A,#LOW keybuf+02H
+0057 F8                MOV     R0,A
+0058 A607              MOV     @R0,AR7
+                                           ; SOURCE LINE # 247
+005A E500        R     MOV     A,keyrow
+005C 25E0              ADD     A,ACC
+005E 25E0              ADD     A,ACC
+0060 2400        R     ADD     A,#LOW keybuf+03H
+0062 F8                MOV     R0,A
+0063 E6                MOV     A,@R0
+0064 25E0              ADD     A,ACC
+0066 FF                MOV     R7,A
+0067 A2B7              MOV     C,KEY_COL_4
+0069 E4                CLR     A
+006A 33                RLC     A
+006B 4F                ORL     A,R7
+006C FF                MOV     R7,A
+006D E500        R     MOV     A,keyrow
+006F 25E0              ADD     A,ACC
+0071 25E0              ADD     A,ACC
+0073 2400        R     ADD     A,#LOW keybuf+03H
+0075 F8                MOV     R0,A
+0076 A607              MOV     @R0,AR7
+                                           ; SOURCE LINE # 254
+;---- Variable 'keycol' assigned to Register 'R7' ----
+0078 E4                CLR     A
+0079 FF                MOV     R7,A
+007A         ?C0046:
+007A EF                MOV     A,R7
+007B C3                CLR     C
+007C 9404              SUBB    A,#04H
+007E 7480              MOV     A,#080H
+0080 9480              SUBB    A,#080H
+0082 5035              JNC     ?C0047
+                                           ; SOURCE LINE # 255
+                                           ; SOURCE LINE # 256
+0084 E500        R     MOV     A,keyrow
+0086 25E0              ADD     A,ACC
+0088 25E0              ADD     A,ACC
+008A 2400        R     ADD     A,#LOW keybuf
+008C 2F                ADD     A,R7
+008D F8                MOV     R0,A
+008E E6                MOV     A,@R0
+008F 540F              ANL     A,#0FH
+0091 FD                MOV     R5,A
+0092 7C00              MOV     R4,#00H
+0094 700E              JNZ     ?C0049
+                                           ; SOURCE LINE # 257
+0096 E500        R     MOV     A,keyrow
+0098 25E0              ADD     A,ACC
+009A 25E0              ADD     A,ACC
+009C 2400        R     ADD     A,#LOW KeySta
+009E 2F                ADD     A,R7
+009F F8                MOV     R0,A
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 17  
+
+00A0 E4                CLR     A
+00A1 F6                MOV     @R0,A
+00A2 8012              SJMP    ?C0048
+00A4         ?C0049:
+                                           ; SOURCE LINE # 258
+00A4 ED                MOV     A,R5
+00A5 640F              XRL     A,#0FH
+00A7 4C                ORL     A,R4
+00A8 700C              JNZ     ?C0048
+                                           ; SOURCE LINE # 259
+00AA E500        R     MOV     A,keyrow
+00AC 25E0              ADD     A,ACC
+00AE 25E0              ADD     A,ACC
+00B0 2400        R     ADD     A,#LOW KeySta
+00B2 2F                ADD     A,R7
+00B3 F8                MOV     R0,A
+00B4 7601              MOV     @R0,#01H
+                                           ; SOURCE LINE # 260
+00B6         ?C0048:
+00B6 0F                INC     R7
+00B7 80C1              SJMP    ?C0046
+00B9         ?C0047:
+                                           ; SOURCE LINE # 262
+00B9 0500        R     INC     keyrow
+                                           ; SOURCE LINE # 263
+00BB 530003      R     ANL     keyrow,#03H
+                                           ; SOURCE LINE # 264
+00BE E500        R     MOV     A,keyrow
+00C0 14                DEC     A
+00C1 600F              JZ      ?C0054
+00C3 14                DEC     A
+00C4 6011              JZ      ?C0055
+00C6 14                DEC     A
+00C7 6013              JZ      ?C0056
+00C9 2403              ADD     A,#03H
+00CB 7013              JNZ     ?C0058
+                                           ; SOURCE LINE # 265
+                                           ; SOURCE LINE # 266
+00CD         ?C0053:
+00CD D2B3              SETB    KEY_ROW_4
+00CF C2B0              CLR     KEY_ROW_1
+00D1 22                RET     
+                                           ; SOURCE LINE # 267
+00D2         ?C0054:
+00D2 D2B0              SETB    KEY_ROW_1
+00D4 C2B1              CLR     KEY_ROW_2
+00D6 22                RET     
+                                           ; SOURCE LINE # 268
+00D7         ?C0055:
+00D7 D2B1              SETB    KEY_ROW_2
+00D9 C2B2              CLR     KEY_ROW_3
+00DB 22                RET     
+                                           ; SOURCE LINE # 269
+00DC         ?C0056:
+00DC D2B2              SETB    KEY_ROW_3
+00DE C2B3              CLR     KEY_ROW_4
+                                           ; SOURCE LINE # 270
+                                           ; SOURCE LINE # 271
+                                           ; SOURCE LINE # 272
+00E0         ?C0058:
+00E0 22                RET     
+             ; FUNCTION KeyScan (END)
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 18  
+
+
+             ; FUNCTION _LedScan (BEGIN)
+                                           ; SOURCE LINE # 275
+;---- Variable 'x' assigned to Register 'R7' ----
+                                           ; SOURCE LINE # 276
+                                           ; SOURCE LINE # 277
+0000 E4                CLR     A
+0001 F580              MOV     P0,A
+                                           ; SOURCE LINE # 278
+0003 D2A6              SETB    SEG
+                                           ; SOURCE LINE # 279
+0005 C2A6              CLR     SEG
+                                           ; SOURCE LINE # 281
+0007 7580FF            MOV     P0,#0FFH
+                                           ; SOURCE LINE # 282
+000A D2A7              SETB    DIG
+                                           ; SOURCE LINE # 283
+000C A807              MOV     R0,AR7
+000E 04                INC     A
+000F 08                INC     R0
+0010 8002              SJMP    ?C0064
+0012         ?C0063:
+0012 C3                CLR     C
+0013 33                RLC     A
+0014         ?C0064:
+0014 D8FC              DJNZ    R0,?C0063
+0016 F4                CPL     A
+0017 5280              ANL     P0,A
+                                           ; SOURCE LINE # 284
+0019 C2A7              CLR     DIG
+                                           ; SOURCE LINE # 286
+001B E4                CLR     A
+001C F580              MOV     P0,A
+                                           ; SOURCE LINE # 287
+001E D2A6              SETB    SEG
+                                           ; SOURCE LINE # 288
+0020 7400        R     MOV     A,#LOW LedBuf
+0022 2F                ADD     A,R7
+0023 F8                MOV     R0,A
+0024 E6                MOV     A,@R0
+0025 F580              MOV     P0,A
+                                           ; SOURCE LINE # 289
+0027 C2A6              CLR     SEG
+                                           ; SOURCE LINE # 290
+0029 22                RET     
+             ; FUNCTION _LedScan (END)
+
+             ; FUNCTION InterruptTimer0 (BEGIN)
+0000 C0E0              PUSH    ACC
+0002 C0D0              PUSH    PSW
+0004 75D000            MOV     PSW,#00H
+0007 C000              PUSH    AR0
+0009 C004              PUSH    AR4
+000B C005              PUSH    AR5
+000D C007              PUSH    AR7
+                                           ; SOURCE LINE # 293
+                                           ; SOURCE LINE # 297
+000F 758CFC            MOV     TH0,#0FCH
+                                           ; SOURCE LINE # 298
+0012 758A67            MOV     TL0,#067H
+                                           ; SOURCE LINE # 300
+0015 AF00        R     MOV     R7,idx+01H
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 19  
+
+0017 120000      R     LCALL   _LedScan
+                                           ; SOURCE LINE # 301
+001A C3                CLR     C
+001B E500        R     MOV     A,idx+01H
+001D 9407              SUBB    A,#07H
+001F E500        R     MOV     A,idx
+0021 9400              SUBB    A,#00H
+0023 500A              JNC     ?C0060
+                                           ; SOURCE LINE # 302
+0025 0500        R     INC     idx+01H
+0027 E500        R     MOV     A,idx+01H
+0029 700A              JNZ     ?C0061
+002B 0500        R     INC     idx
+002D         ?C0065:
+002D 8006              SJMP    ?C0061
+002F         ?C0060:
+                                           ; SOURCE LINE # 304
+002F 750000      R     MOV     idx,#00H
+0032 750000      R     MOV     idx+01H,#00H
+0035         ?C0061:
+                                           ; SOURCE LINE # 305
+0035 120000      R     LCALL   KeyScan
+                                           ; SOURCE LINE # 306
+0038 D007              POP     AR7
+003A D005              POP     AR5
+003C D004              POP     AR4
+003E D000              POP     AR0
+0040 D0D0              POP     PSW
+0042 D0E0              POP     ACC
+0044 32                RETI    
+             ; FUNCTION InterruptTimer0 (END)
+
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 20  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+P0 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0080H  1
+P1 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0090H  1
+P2 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A0H  1
+P3 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B0H  1
+XICON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C0H  1
+T0 . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B4H  1
+AC . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D6H  1
+P4 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E8H  1
+T1 . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B5H  1
+ISP_TRIG . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E6H  1
+T2 . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0090H  1
+EA . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00AFH  1
+EC . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00AEH  1
+InterruptTimer0. . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  idx. . . . . . . . . . . . . . . . .  STATIC   DATA   U_INT    0011H  2
+FE . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009FH  1
+_KeyAction . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  keycode. . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0000H  1
+IE . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A8H  1
+_ShowNumber. . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  num. . . . . . . . . . . . . . . . .  AUTO     DATA   U_LONG   0000H  4
+  i. . . . . . . . . . . . . . . . . .  AUTO     DATA   CHAR     0004H  1
+  buf. . . . . . . . . . . . . . . . .  AUTO     DATA   ARRAY    0005H  8
+EXF2 . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CEH  1
+RD . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B7H  1
+LedChar. . . . . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    0000H  16
+ES . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ACH  1
+cnt_opration . . . . . . . . . . . . .  PUBLIC   DATA   U_CHAR   0013H  1
+IP . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B8H  1
+RI . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0098H  1
+INT0 . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B2H  1
+CY . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D7H  1
+TI . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0099H  1
+INT1 . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B3H  1
+_LedScan . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  x. . . . . . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0007H  1
+RCAP2H . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CBH  1
+ISP_CMD. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E5H  1
+result . . . . . . . . . . . . . . . .  PUBLIC   DATA   U_LONG   0014H  4
+PS . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00BCH  1
+SP . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0081H  1
+T2EX . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0091H  1
+OV . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D2H  1
+RCAP2L . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CAH  1
+main . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+flag_add . . . . . . . . . . . . . . .  PUBLIC   DATA   BIT      0000H  1
+C_T2 . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C9H  1
+WR . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B6H  1
+RCLK . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CDH  1
+TCLK . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CCH  1
+P00. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0080H  1
+SBUF . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0099H  1
+PCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0087H  1
+P10. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0090H  1
+P01. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0081H  1
+KeyScan. . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  keycol . . . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0007H  1
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 21  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+  keyrow . . . . . . . . . . . . . . .  STATIC   DATA   U_CHAR   0000H  1
+  keybuf . . . . . . . . . . . . . . .  STATIC   DATA   ARRAY    0001H  16
+P20. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A0H  1
+P11. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0091H  1
+P02. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0082H  1
+ISP_ADDRH. . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E3H  1
+P30. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B0H  1
+P21. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A1H  1
+P12. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0092H  1
+P03. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0083H  1
+SCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
+P31. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B1H  1
+P22. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A2H  1
+P13. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0093H  1
+P04. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0084H  1
+P40. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00E8H  1
+LedBuf . . . . . . . . . . . . . . . .  PUBLIC   DATA   ARRAY    0018H  8
+TMOD . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0089H  1
+TCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0088H  1
+P32. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B2H  1
+P23. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A3H  1
+P14. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0094H  1
+P05. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0085H  1
+P41. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00E9H  1
+P33. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B3H  1
+P24. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A4H  1
+P15. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0095H  1
+P06. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0086H  1
+ISP_ADDRL. . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E4H  1
+P42. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00EAH  1
+P34. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B4H  1
+P25. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A5H  1
+P16. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0096H  1
+P07. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0087H  1
+P43. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00EBH  1
+P35. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B5H  1
+P26. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A6H  1
+P17. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0097H  1
+P44. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ECH  1
+P36. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B6H  1
+P27. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A7H  1
+P45. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00EDH  1
+KEY_COL_1. . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B4H  1
+P37. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B7H  1
+P46. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00EEH  1
+KEY_COL_2. . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B5H  1
+KEY_COL_3. . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B6H  1
+KEY_COL_4. . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B7H  1
+IE0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0089H  1
+IE1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008BH  1
+flag_div . . . . . . . . . . . . . . .  PUBLIC   DATA   BIT      0001H  1
+AUXR . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008EH  1
+B. . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F0H  1
+CP_RL2 . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C8H  1
+ACC. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E0H  1
+DoCalculate. . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+flag_res . . . . . . . . . . . . . . .  PUBLIC   DATA   BIT      0002H  1
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 22  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+flag_sub . . . . . . . . . . . . . . .  PUBLIC   DATA   BIT      0003H  1
+KeyCodeMap . . . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    0010H  16
+ET0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A9H  1
+ET1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ABH  1
+TF0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008DH  1
+ET2. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ADH  1
+TF1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008FH  1
+flag_mul . . . . . . . . . . . . . . .  PUBLIC   DATA   BIT      0004H  1
+TF2. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CFH  1
+RB8. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009AH  1
+TH0. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008CH  1
+EX0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A8H  1
+IT0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0088H  1
+TH1. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008DH  1
+TB8. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009BH  1
+EX1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00AAH  1
+IT1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008AH  1
+TH2. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CDH  1
+P. . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D0H  1
+SM0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009FH  1
+TL0. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008AH  1
+SM1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009EH  1
+TL1. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008BH  1
+SM2. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009DH  1
+TL2. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CCH  1
+KeySta . . . . . . . . . . . . . . . .  PUBLIC   DATA   ARRAY    0020H  16
+KEY_ROW_1. . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B0H  1
+DIG. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A7H  1
+PT0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B9H  1
+KEY_ROW_2. . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B1H  1
+PT1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00BBH  1
+RS0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D3H  1
+ISP_CONTR. . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E7H  1
+KEY_ROW_3. . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B2H  1
+PT2. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00BDH  1
+TR0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008CH  1
+RS1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D4H  1
+KEY_ROW_4. . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B3H  1
+TR1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008EH  1
+TR2. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CAH  1
+PX0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B8H  1
+WDT_CONTR. . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E1H  1
+PX1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00BAH  1
+DPH. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0083H  1
+op . . . . . . . . . . . . . . . . . .  PUBLIC   DATA   U_LONG   0030H  4
+SEG. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A6H  1
+DPL. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0082H  1
+IPH. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B7H  1
+EXEN2. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CBH  1
+REN. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009CH  1
+T2MOD. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C9H  1
+T2CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C8H  1
+ISP_DATA . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E2H  1
+SADEN. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B9H  1
+RXD. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B0H  1
+SADDR. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A9H  1
+TXD. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B1H  1
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 15:16:06 PAGE 23  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+AUXR1. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A2H  1
+F0 . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D5H  1
+DecToHex . . . . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    0020H  8
+PSW. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D0H  1
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    964    ----
+   CONSTANT SIZE    =     40    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     52      14
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      5    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

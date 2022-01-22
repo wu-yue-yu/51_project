@@ -1,0 +1,3 @@
+
+".\build\Target 1\main.o",".\build\Target 1\STARTUP.o",c:\Keil_v5\C51\LIB\C51S.LIB TO ".\build\Target 1\seven_seg_display_countdown"
+PRINT(".\build\Target 1\seven_seg_display_countdown.map") REMOVEUNUSED

@@ -1,0 +1,965 @@
+[2022-01-13 17:29:10]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** WARNING C206 IN LINE 42 OF .\MAIN.C: 'whlie': missing function-prototype
+*** ERROR C267 IN LINE 42 OF .\MAIN.C: 'whlie': requires ANSI-style prototype
+*** ERROR C141 IN LINE 43 OF .\MAIN.C: syntax error near '{', expected ';'
+C51 COMPILATION COMPLETE.  1 WARNING(S),  2 ERROR(S)
+
+[2022-01-13 17:29:29]	[done]
+	build successfully !
+
+[2022-01-13 17:31:36]	[done]
+	build successfully !
+
+[2022-01-13 17:32:42]	[done]
+	build successfully !
+
+[2022-01-13 17:33:41]	[done]
+	build successfully !
+
+[2022-01-13 17:34:08]	[done]
+	build successfully !
+
+[2022-01-13 17:34:32]	[done]
+	build successfully !
+
+[2022-01-13 17:36:01]	[done]
+	build successfully !
+
+[2022-01-13 17:36:38]	[done]
+	build successfully !
+
+[2022-01-13 17:36:50]	[done]
+	build successfully !
+
+[2022-01-13 17:37:05]	[done]
+	build successfully !
+
+[2022-01-13 17:37:13]	[done]
+	build successfully !
+
+[2022-01-13 17:39:03]	[done]
+	build successfully !
+
+[2022-01-13 17:40:01]	[done]
+	build successfully !
+
+[2022-01-13 18:17:55]	[done]
+	build successfully !
+
+[2022-01-13 18:24:01]	[done]
+	build successfully !
+
+[2022-01-13 18:25:43]	[done]
+	build successfully !
+
+[2022-01-13 18:26:16]	[done]
+	build successfully !
+
+[2022-01-13 18:27:44]	[done]
+	build successfully !
+
+[2022-01-13 18:29:05]	[done]
+	build successfully !
+
+[2022-01-13 18:29:19]	[done]
+	build successfully !
+
+[2022-01-13 18:31:15]	[done]
+	build successfully !
+
+[2022-01-13 18:31:54]	[done]
+	build successfully !
+
+[2022-01-13 18:32:28]	[done]
+	build successfully !
+
+[2022-01-13 18:32:42]	[done]
+	build successfully !
+
+[2022-01-13 18:38:43]	[done]
+	build successfully !
+
+[2022-01-13 18:40:51]	[done]
+	build successfully !
+
+[2022-01-13 18:41:24]	[done]
+	build successfully !
+
+[2022-01-13 21:18:50]	[done]
+	build successfully !
+
+[2022-01-13 21:19:30]	[done]
+	build successfully !
+
+[2022-01-13 21:19:45]	[done]
+	build successfully !
+
+[2022-01-13 21:19:53]	[done]
+	build successfully !
+
+[2022-01-13 21:20:09]	[done]
+	build successfully !
+
+[2022-01-13 21:20:29]	[done]
+	build successfully !
+
+[2022-01-13 21:20:32]	[done]
+	build successfully !
+
+[2022-01-13 21:21:41]	[done]
+	build successfully !
+
+[2022-01-13 21:22:47]	[done]
+	build successfully !
+
+[2022-01-13 21:23:27]	[done]
+	build successfully !
+
+[2022-01-13 21:23:38]	[done]
+	build successfully !
+
+[2022-01-13 21:24:57]	[done]
+	build successfully !
+
+[2022-01-13 21:25:01]	[done]
+	build successfully !
+
+[2022-01-13 21:25:04]	[done]
+	build successfully !
+
+[2022-01-13 22:02:48]	[done]
+	build successfully !
+
+[2022-01-13 22:03:09]	[done]
+	build successfully !
+
+[2022-01-13 22:08:16]	[done]
+	build successfully !
+
+[2022-01-13 22:08:37]	[done]
+	build successfully !
+
+[2022-01-13 22:08:55]	[done]
+	build successfully !
+
+[2022-01-13 22:09:23]	[done]
+	build successfully !
+
+[2022-01-13 22:09:43]	[done]
+	build successfully !
+
+[2022-01-13 22:09:52]	[done]
+	build successfully !
+
+[2022-01-13 22:10:15]	[done]
+	build successfully !
+
+[2022-01-13 22:10:35]	[done]
+	build successfully !
+
+[2022-01-13 22:12:12]	[done]
+	build successfully !
+
+[2022-01-13 22:12:57]	[done]
+	build successfully !
+
+[2022-01-13 22:13:03]	[done]
+	build successfully !
+
+[2022-01-13 22:22:43]	[done]
+	build successfully !
+
+[2022-01-13 22:23:15]	[done]
+	build successfully !
+
+[2022-01-13 22:29:56]	[done]
+	build successfully !
+
+[2022-01-13 22:30:54]	[done]
+	build successfully !
+
+[2022-01-13 22:31:21]	[done]
+	build successfully !
+
+[2022-01-13 22:31:52]	[done]
+	build successfully !
+
+[2022-01-13 22:32:40]	[done]
+	build successfully !
+
+[2022-01-13 22:33:53]	[done]
+	build successfully !
+
+[2022-01-13 22:34:24]	[done]
+	build successfully !
+
+[2022-01-13 22:34:39]	[done]
+	build successfully !
+
+[2022-01-13 22:35:05]	[done]
+	build successfully !
+
+[2022-01-13 22:35:15]	[done]
+	build successfully !
+
+[2022-01-13 22:35:30]	[done]
+	build successfully !
+
+[2022-01-13 22:35:37]	[done]
+	build successfully !
+
+[2022-01-13 22:36:19]	[done]
+	build successfully !
+
+[2022-01-13 22:36:38]	[done]
+	build successfully !
+
+[2022-01-13 22:37:16]	[done]
+	build successfully !
+
+[2022-01-13 22:38:36]	[done]
+	build successfully !
+
+[2022-01-13 22:39:06]	[done]
+	build successfully !
+
+[2022-01-13 22:39:57]	[done]
+	build successfully !
+
+[2022-01-13 22:40:27]	[done]
+	build successfully !
+
+[2022-01-13 22:40:41]	[done]
+	build successfully !
+
+[2022-01-13 22:46:06]	[done]
+	build successfully !
+
+[2022-01-13 22:46:34]	[done]
+	build successfully !
+
+[2022-01-13 22:46:49]	[done]
+	build successfully !
+
+[2022-01-13 22:48:31]	[done]
+	build successfully !
+
+[2022-01-13 22:49:31]	[done]
+	build successfully !
+
+[2022-01-13 22:53:10]	[done]
+	build successfully !
+
+[2022-01-13 22:53:38]	[done]
+	build successfully !
+
+[2022-01-13 22:54:17]	[done]
+	build successfully !
+
+[2022-01-13 22:55:54]	[done]
+	build successfully !
+
+[2022-01-13 22:58:56]	[done]
+	build successfully !
+
+[2022-01-13 22:59:11]	[done]
+	build successfully !
+
+[2022-01-13 23:00:54]	[done]
+	build successfully !
+
+[2022-01-13 23:01:50]	[done]
+	build successfully !
+
+[2022-01-13 23:03:07]	[done]
+	build successfully !
+
+[2022-01-13 23:05:35]	[done]
+	build successfully !
+
+[2022-01-13 23:06:34]	[done]
+	build successfully !
+
+[2022-01-13 23:09:18]	[done]
+	build successfully !
+
+[2022-01-13 23:09:50]	[done]
+	build successfully !
+
+[2022-01-13 23:10:05]	[done]
+	build successfully !
+
+[2022-01-13 23:11:37]	[done]
+	build successfully !
+
+[2022-01-13 23:13:16]	[done]
+	build successfully !
+
+[2022-01-14 08:21:08]	[done]
+	build successfully !
+
+[2022-01-14 08:24:44]	[done]
+	build successfully !
+
+[2022-01-14 08:25:45]	[done]
+	build successfully !
+
+[2022-01-14 08:26:00]	[done]
+	build successfully !
+
+[2022-01-14 08:26:15]	[done]
+	build successfully !
+
+[2022-01-14 08:26:29]	[done]
+	build successfully !
+
+[2022-01-14 08:26:42]	[done]
+	build successfully !
+
+[2022-01-14 08:27:42]	[done]
+	build successfully !
+
+[2022-01-14 08:28:00]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C141 IN LINE 66 OF .\MAIN.C: syntax error near '/', expected '__asm'
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
+
+[2022-01-14 08:28:07]	[done]
+	build successfully !
+
+[2022-01-14 08:28:32]	[done]
+	build successfully !
+
+[2022-01-14 08:29:50]	[done]
+	build successfully !
+
+[2022-01-14 08:30:58]	[done]
+	build successfully !
+
+[2022-01-14 08:42:05]	[done]
+	build successfully !
+
+[2022-01-14 08:44:19]	[done]
+	build successfully !
+
+[2022-01-14 08:44:57]	[done]
+	build successfully !
+
+[2022-01-14 08:45:26]	[done]
+	build successfully !
+
+[2022-01-14 08:46:26]	[done]
+	build successfully !
+
+[2022-01-14 08:47:05]	[done]
+	build successfully !
+
+[2022-01-14 09:01:59]	[done]
+	build successfully !
+
+[2022-01-14 09:02:23]	[done]
+	build successfully !
+
+[2022-01-14 09:03:10]	[done]
+	build successfully !
+
+[2022-01-14 09:04:06]	[done]
+	build successfully !
+
+[2022-01-14 09:04:41]	[done]
+	build successfully !
+
+[2022-01-14 09:05:21]	[done]
+	build successfully !
+
+[2022-01-14 09:06:00]	[done]
+	build successfully !
+
+[2022-01-14 09:06:25]	[done]
+	build successfully !
+
+[2022-01-14 09:07:00]	[done]
+	build successfully !
+
+[2022-01-14 09:07:18]	[done]
+	build successfully !
+
+[2022-01-14 09:10:43]	[done]
+	build successfully !
+
+[2022-01-14 09:11:29]	[done]
+	build successfully !
+
+[2022-01-14 09:13:09]	[done]
+	build successfully !
+
+[2022-01-14 09:13:12]	[done]
+	build successfully !
+
+[2022-01-14 09:15:42]	[done]
+	build successfully !
+
+[2022-01-14 09:15:52]	[done]
+	build successfully !
+
+[2022-01-14 09:19:42]	[done]
+	build successfully !
+
+[2022-01-14 09:19:47]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C141 IN LINE 22 OF .\MAIN.C: syntax error near '}', expected 'sizeof'
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
+
+[2022-01-14 09:19:56]	[done]
+	build successfully !
+
+[2022-01-14 09:20:44]	[done]
+	build successfully !
+
+[2022-01-14 09:21:10]	[done]
+	build successfully !
+
+[2022-01-14 09:22:38]	[done]
+	build successfully !
+
+[2022-01-14 09:25:50]	[done]
+	build successfully !
+
+[2022-01-14 09:33:11]	[done]
+	build successfully !
+
+[2022-01-14 09:41:31]	[done]
+	build successfully !
+
+[2022-01-14 09:41:49]	[done]
+	build successfully !
+
+[2022-01-14 09:42:06]	[done]
+	build successfully !
+
+[2022-01-14 09:59:04]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C141 IN LINE 52 OF .\MAIN.C: syntax error near 'TransLed', expected ';'
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
+
+[2022-01-14 09:59:15]	[done]
+	build successfully !
+
+[2022-01-14 10:00:19]	[done]
+	build successfully !
+
+[2022-01-14 10:02:15]	[done]
+	build successfully !
+
+[2022-01-14 10:02:52]	[done]
+	build successfully !
+
+[2022-01-14 10:04:25]	[done]
+	build successfully !
+
+[2022-01-14 10:05:14]	[done]
+	build successfully !
+
+[2022-01-14 10:06:13]	[done]
+	build successfully !
+
+[2022-01-14 10:06:43]	[done]
+	build successfully !
+
+[2022-01-14 10:07:31]	[done]
+	build successfully !
+
+[2022-01-14 10:08:24]	[done]
+	build successfully !
+
+[2022-01-14 10:08:44]	[done]
+	build successfully !
+
+[2022-01-14 10:10:30]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE5 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xB9 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xB6 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE5 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x8F skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xAA skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE4 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xBF skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x9D skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE7 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x95 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x99 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE6 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x9C skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x89 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE6 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x95 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x88 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE4 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xBD skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x8D skipped
+*** ERROR C202 IN LINE 73 OF .\MAIN.C: 'i': undefined identifier
+*** ERROR C202 IN LINE 75 OF .\MAIN.C: 'i': undefined identifier
+*** ERROR C202 IN LINE 76 OF .\MAIN.C: 'i': undefined identifier
+C51 COMPILATION COMPLETE.  0 WARNING(S),  24 ERROR(S)
+
+[2022-01-14 10:10:39]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE5 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xB9 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xB6 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE5 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x8F skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xAA skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE4 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xBF skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x9D skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE7 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x95 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x99 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE6 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x9C skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x89 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE6 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x95 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x88 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xE4 skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0xBD skipped
+*** ERROR C100 IN LINE 72 OF .\MAIN.C: unprintable character 0x8D skipped
+C51 COMPILATION COMPLETE.  0 WARNING(S),  21 ERROR(S)
+
+[2022-01-14 10:10:47]	[done]
+	build successfully !
+
+[2022-01-14 10:12:38]	[done]
+	build successfully !
+
+[2022-01-14 10:13:02]	[done]
+	build successfully !
+
+[2022-01-14 10:13:27]	[done]
+	build successfully !
+
+[2022-01-14 10:13:36]	[done]
+	build successfully !
+
+[2022-01-14 10:16:08]	[done]
+	build successfully !
+
+[2022-01-14 10:16:23]	[done]
+	build successfully !
+
+[2022-01-14 10:20:49]	[done]
+	build successfully !
+
+[2022-01-14 10:21:04]	[done]
+	build successfully !
+
+[2022-01-14 10:21:51]	[done]
+	build successfully !
+
+[2022-01-14 10:22:09]	[done]
+	build successfully !
+
+[2022-01-14 10:24:46]	[done]
+	build successfully !
+
+[2022-01-14 10:25:01]	[done]
+	build successfully !
+
+[2022-01-14 10:25:14]	[done]
+	build successfully !
+
+[2022-01-14 10:28:42]	[done]
+	build successfully !
+
+[2022-01-14 10:30:51]	[done]
+	build successfully !
+
+[2022-01-14 10:31:16]	[done]
+	build successfully !
+
+[2022-01-14 10:31:32]	[done]
+	build successfully !
+
+[2022-01-14 10:32:41]	[done]
+	build successfully !
+
+[2022-01-14 10:33:03]	[done]
+	build successfully !
+
+[2022-01-14 10:33:47]	[done]
+	build successfully !
+
+[2022-01-14 10:33:58]	[done]
+	build successfully !
+
+[2022-01-14 10:34:27]	[done]
+	build successfully !
+
+[2022-01-14 11:06:25]	[done]
+	build successfully !
+
+[2022-01-14 11:07:01]	[done]
+	build successfully !
+
+[2022-01-14 11:07:10]	[done]
+	build successfully !
+
+[2022-01-14 11:07:21]	[done]
+	build successfully !
+
+[2022-01-14 11:17:22]	[done]
+	build successfully !
+
+[2022-01-14 11:18:00]	[done]
+	build successfully !
+
+[2022-01-14 14:11:36]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C141 IN LINE 90 OF .\MAIN.C: syntax error near 'int', expected 'sizeof'
+*** ERROR C202 IN LINE 90 OF .\MAIN.C: 'i': undefined identifier
+*** ERROR C202 IN LINE 90 OF .\MAIN.C: 'i': undefined identifier
+*** ERROR C202 IN LINE 90 OF .\MAIN.C: 'i': undefined identifier
+*** ERROR C141 IN LINE 90 OF .\MAIN.C: syntax error near ')', expected ';'
+*** ERROR C141 IN LINE 91 OF .\MAIN.C: syntax error near 'int', expected 'sizeof'
+*** ERROR C202 IN LINE 91 OF .\MAIN.C: 'j': undefined identifier
+*** ERROR C202 IN LINE 91 OF .\MAIN.C: 'j': undefined identifier
+*** ERROR C141 IN LINE 91 OF .\MAIN.C: syntax error near ')', expected ';'
+C51 COMPILATION COMPLETE.  0 WARNING(S),  9 ERROR(S)
+
+[2022-01-14 14:12:04]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C141 IN LINE 90 OF .\MAIN.C: syntax error near 'unsigned', expected 'sizeof'
+*** ERROR C202 IN LINE 90 OF .\MAIN.C: 'i': undefined identifier
+*** ERROR C202 IN LINE 90 OF .\MAIN.C: 'i': undefined identifier
+*** ERROR C202 IN LINE 90 OF .\MAIN.C: 'i': undefined identifier
+*** ERROR C141 IN LINE 90 OF .\MAIN.C: syntax error near ')', expected ';'
+*** ERROR C141 IN LINE 91 OF .\MAIN.C: syntax error near 'unsigned', expected 'sizeof'
+*** ERROR C202 IN LINE 91 OF .\MAIN.C: 'j': undefined identifier
+*** ERROR C202 IN LINE 91 OF .\MAIN.C: 'j': undefined identifier
+*** ERROR C141 IN LINE 91 OF .\MAIN.C: syntax error near ')', expected ';'
+C51 COMPILATION COMPLETE.  0 WARNING(S),  9 ERROR(S)
+
+[2022-01-14 14:12:36]	[done]
+	build successfully !
+
+[2022-01-14 14:13:22]	[done]
+	build successfully !
+
+[2022-01-14 14:13:37]	[done]
+	build successfully !
+
+[2022-01-14 15:36:34]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** WARNING C206 IN LINE 49 OF .\MAIN.C: 'DisNum': missing function-prototype
+*** ERROR C267 IN LINE 49 OF .\MAIN.C: 'DisNum': requires ANSI-style prototype
+*** ERROR C236 IN LINE 88 OF .\MAIN.C: '_DisplayLed': different length of parameter lists
+*** ERROR C231 IN LINE 100 OF .\MAIN.C: 'DisNum': redefinition
+*** ERROR C202 IN LINE 104 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 112 OF .\MAIN.C: 'l': undefined identifier
+*** ERROR C231 IN LINE 124 OF .\MAIN.C: 'DisNum': redefinition
+C51 COMPILATION COMPLETE.  1 WARNING(S),  6 ERROR(S)
+
+[2022-01-14 15:37:19]	[done]
+	build successfully !
+
+[2022-01-14 15:50:41]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** WARNING C206 IN LINE 49 OF .\MAIN.C: 'DisNum': missing function-prototype
+*** ERROR C267 IN LINE 49 OF .\MAIN.C: 'DisNum': requires ANSI-style prototype
+*** ERROR C236 IN LINE 88 OF .\MAIN.C: '_DisplayLed': different length of parameter lists
+*** ERROR C231 IN LINE 100 OF .\MAIN.C: 'DisNum': redefinition
+*** ERROR C202 IN LINE 104 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 112 OF .\MAIN.C: 'l': undefined identifier
+*** ERROR C231 IN LINE 124 OF .\MAIN.C: 'DisNum': redefinition
+C51 COMPILATION COMPLETE.  1 WARNING(S),  6 ERROR(S)
+
+[2022-01-14 15:51:26]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** WARNING C206 IN LINE 50 OF .\MAIN.C: 'DisNum': missing function-prototype
+*** ERROR C236 IN LINE 89 OF .\MAIN.C: '_DisplayLed': different length of parameter lists
+*** ERROR C231 IN LINE 101 OF .\MAIN.C: 'DisNum': redefinition
+*** ERROR C202 IN LINE 105 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 113 OF .\MAIN.C: 'l': undefined identifier
+*** ERROR C231 IN LINE 125 OF .\MAIN.C: 'DisNum': redefinition
+C51 COMPILATION COMPLETE.  1 WARNING(S),  5 ERROR(S)
+
+[2022-01-14 15:54:51]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** WARNING C206 IN LINE 50 OF .\MAIN.C: 'DisNum': missing function-prototype
+*** ERROR C267 IN LINE 50 OF .\MAIN.C: 'DisNum': requires ANSI-style prototype
+*** ERROR C236 IN LINE 89 OF .\MAIN.C: '_DisplayLed': different length of parameter lists
+*** ERROR C231 IN LINE 101 OF .\MAIN.C: 'DisNum': redefinition
+*** ERROR C202 IN LINE 105 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 113 OF .\MAIN.C: 'l': undefined identifier
+*** ERROR C231 IN LINE 125 OF .\MAIN.C: 'DisNum': redefinition
+C51 COMPILATION COMPLETE.  1 WARNING(S),  6 ERROR(S)
+
+[2022-01-14 15:55:11]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C202 IN LINE 32 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 40 OF .\MAIN.C: 'l': undefined identifier
+*** ERROR C208 IN LINE 42 OF .\MAIN.C: '_DisplayLed': too many actual parameters
+*** ERROR C208 IN LINE 43 OF .\MAIN.C: '_DisplayLed': too many actual parameters
+*** ERROR C208 IN LINE 44 OF .\MAIN.C: '_DisplayLed': too many actual parameters
+*** ERROR C208 IN LINE 45 OF .\MAIN.C: '_DisplayLed': too many actual parameters
+*** ERROR C208 IN LINE 46 OF .\MAIN.C: '_DisplayLed': too many actual parameters
+*** ERROR C208 IN LINE 47 OF .\MAIN.C: '_DisplayLed': too many actual parameters
+*** ERROR C208 IN LINE 48 OF .\MAIN.C: '_DisplayLed': too many actual parameters
+*** ERROR C208 IN LINE 49 OF .\MAIN.C: '_DisplayLed': too many actual parameters
+*** ERROR C236 IN LINE 115 OF .\MAIN.C: '_DisplayLed': different length of parameter lists
+C51 COMPILATION COMPLETE.  0 WARNING(S),  11 ERROR(S)
+
+[2022-01-14 15:55:34]	[done]
+	build successfully !
+
+[2022-01-14 15:56:32]	[done]
+	build successfully !
+
+[2022-01-14 15:57:38]	[done]
+	build successfully !
+
+[2022-01-14 16:14:37]	[done]
+	build successfully !
+
+[2022-01-14 16:14:53]	[done]
+	build successfully !
+
+[2022-01-14 16:17:29]	[done]
+	build successfully !
+
+[2022-01-14 16:18:11]	[done]
+	build successfully !
+
+[2022-01-14 16:22:46]	[done]
+	build successfully !
+
+[2022-01-14 16:23:00]	[done]
+	build successfully !
+
+[2022-01-14 16:23:48]	[done]
+	build successfully !
+
+[2022-01-14 16:24:01]	[done]
+	build successfully !
+
+[2022-01-14 16:24:49]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C202 IN LINE 47 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 48 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 49 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 50 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 51 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 52 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 53 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 54 OF .\MAIN.C: 't': undefined identifier
+*** ERROR C202 IN LINE 57 OF .\MAIN.C: 'i': undefined identifier
+*** ERROR C202 IN LINE 59 OF .\MAIN.C: 'i': undefined identifier
+*** ERROR C202 IN LINE 60 OF .\MAIN.C: 'i': undefined identifier
+C51 COMPILATION COMPLETE.  0 WARNING(S),  11 ERROR(S)
+
+[2022-01-14 16:25:03]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C202 IN LINE 57 OF .\MAIN.C: 'i': undefined identifier
+*** ERROR C202 IN LINE 59 OF .\MAIN.C: 'i': undefined identifier
+*** ERROR C202 IN LINE 60 OF .\MAIN.C: 'i': undefined identifier
+C51 COMPILATION COMPLETE.  0 WARNING(S),  3 ERROR(S)
+
+[2022-01-14 16:25:20]	[done]
+	build successfully !
+
+[2022-01-14 16:26:12]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C202 IN LINE 106 OF .\MAIN.C: 'sec': undefined identifier
+*** ERROR C202 IN LINE 107 OF .\MAIN.C: 'sec': undefined identifier
+C51 COMPILATION COMPLETE.  0 WARNING(S),  2 ERROR(S)
+
+[2022-01-14 16:26:35]	link failed !, exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x019f5] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+LX51 LINKER/LOCATER V4.66.97.0 - SN: K1DZC-YRXDFC
+COPYRIGHT ARM Germany GmbH 1995 - 2019
+"@d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\build\Target 1\seven_seg_display_countdown.lnp" 
+".\build\Target 1\main.o",".\build\Target 1\STARTUP.o",c:\Keil_v5\C51\LIB\C51S.LIB TO ".\build\Target 1\seven_seg_display_countdown"
+PRINT(".\build\Target 1\seven_seg_display_countdown.map") REMOVEUNUSED
+*** ERROR L127: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _TransLed
+    MODULE:  .\build\Target 1\main.o (MAIN)
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _TransLed
+    MODULE:  .\build\Target 1\main.o (MAIN)
+    ADDRESS: 1000064H
+Program Size: data=25.0 xdata=0 const=0 code=369
+LX51 RUN COMPLETE.  0 WARNING(S),  2 ERROR(S)
+
+
+[2022-01-14 16:26:41]	link failed !, exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x019f5] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+LX51 LINKER/LOCATER V4.66.97.0 - SN: K1DZC-YRXDFC
+COPYRIGHT ARM Germany GmbH 1995 - 2019
+"@d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\build\Target 1\seven_seg_display_countdown.lnp" 
+".\build\Target 1\main.o",".\build\Target 1\STARTUP.o",c:\Keil_v5\C51\LIB\C51S.LIB TO ".\build\Target 1\seven_seg_display_countdown"
+PRINT(".\build\Target 1\seven_seg_display_countdown.map") REMOVEUNUSED
+*** ERROR L127: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _TransLed
+    MODULE:  .\build\Target 1\main.o (MAIN)
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _TransLed
+    MODULE:  .\build\Target 1\main.o (MAIN)
+    ADDRESS: 1000064H
+Program Size: data=25.0 xdata=0 const=0 code=369
+LX51 RUN COMPLETE.  0 WARNING(S),  2 ERROR(S)
+
+
+[2022-01-14 16:27:21]	link failed !, exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x019f5] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+LX51 LINKER/LOCATER V4.66.97.0 - SN: K1DZC-YRXDFC
+COPYRIGHT ARM Germany GmbH 1995 - 2019
+"@d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\build\Target 1\seven_seg_display_countdown.lnp" 
+".\build\Target 1\main.o",".\build\Target 1\STARTUP.o",c:\Keil_v5\C51\LIB\C51S.LIB TO ".\build\Target 1\seven_seg_display_countdown"
+PRINT(".\build\Target 1\seven_seg_display_countdown.map") REMOVEUNUSED
+*** ERROR L127: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _TransLed
+    MODULE:  .\build\Target 1\main.o (MAIN)
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _TransLed
+    MODULE:  .\build\Target 1\main.o (MAIN)
+    ADDRESS: 1000064H
+Program Size: data=25.0 xdata=0 const=0 code=377
+LX51 RUN COMPLETE.  0 WARNING(S),  2 ERROR(S)
+
+
+[2022-01-14 16:27:39]	[done]
+	build successfully !
+
+[2022-01-14 16:28:14]	[done]
+	build successfully !
+
+[2022-01-14 16:29:00]	[done]
+	build successfully !
+
+[2022-01-14 16:29:26]	[done]
+	build successfully !
+
+[2022-01-14 16:30:59]	[done]
+	build successfully !
+
+[2022-01-14 16:31:13]	[done]
+	build successfully !
+
+[2022-01-14 16:31:34]	[done]
+	build successfully !
+
+[2022-01-14 16:31:52]	[done]
+	build successfully !
+
+[2022-01-14 16:32:09]	[done]
+	build successfully !
+
+[2022-01-14 16:32:29]	[done]
+	build successfully !
+
+[2022-01-20 15:49:10]	[done]
+	build successfully !
+
+[2022-01-20 15:50:31]	[done]
+	build successfully !
+
+[2022-01-20 15:51:11]	[done]
+	build successfully !
+
+[2022-01-20 15:51:24]	[done]
+	build successfully !
+
+[2022-01-21 15:10:08]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** WARNING C206 IN LINE 36 OF .\MAIN.C: 'whlie': missing function-prototype
+*** ERROR C267 IN LINE 36 OF .\MAIN.C: 'whlie': requires ANSI-style prototype
+*** ERROR C141 IN LINE 37 OF .\MAIN.C: syntax error near '{', expected ';'
+*** ERROR C202 IN LINE 101 OF .\MAIN.C: 'flag_1s': undefined identifier
+C51 COMPILATION COMPLETE.  1 WARNING(S),  3 ERROR(S)
+
+[2022-01-21 15:10:24]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\seven_seg_display_countdown\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01851] in <bd848165df964d26b51d3d1ad263c7b0>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C202 IN LINE 101 OF .\MAIN.C: 'flag_1s': undefined identifier
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
+
+[2022-01-21 15:11:23]	[done]
+	build successfully !
+
+[2022-01-21 15:13:12]	[done]
+	build successfully !
+
+[2022-01-21 15:13:56]	[done]
+	build successfully !
+
+[2022-01-21 15:14:45]	[done]
+	build successfully !
+
+[2022-01-21 15:18:40]	[done]
+	build successfully !
+
+[2022-01-21 15:19:04]	[done]
+	build successfully !
+
+[2022-01-21 15:19:12]	[done]
+	build successfully !
+
