@@ -3,7 +3,7 @@
  * @Author: 五月雨
  * @Date: 2022-01-21 15:33:38
  * @LastEditors: 五月雨
- * @LastEditTime: 2022-01-22 15:20:00
+ * @LastEditTime: 2022-01-23 18:03:20
  * @Board: 清翔51开发板
  * @Chip: STC89C52
  */
@@ -11,14 +11,14 @@
 
 sbit SEG = P2^6;                        //数码管位选
 sbit DIG = P2^7;                        //数码管段选
-sbit KEY_COL_1 = P3^4;     
-sbit KEY_COL_2 = P3^5;
-sbit KEY_COL_3 = P3^6;
-sbit KEY_COL_4 = P3^7;
 sbit KEY_ROW_1 = P3^0;
 sbit KEY_ROW_2 = P3^1;
 sbit KEY_ROW_3 = P3^2;
 sbit KEY_ROW_4 = P3^3;
+sbit KEY_COL_1 = P3^4;     
+sbit KEY_COL_2 = P3^5;
+sbit KEY_COL_3 = P3^6;
+sbit KEY_COL_4 = P3^7;
 
 unsigned char code LedChar[] = {        //数码管显示字符转换表
     0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 
@@ -36,16 +36,12 @@ unsigned char code KeyCodeMap[4][4] = { //按键映射
 unsigned char KeySta[4][4] = {          //按键当前状态存储
     {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}
 };
-unsigned char code DecToHex[] = {       //数码管位置索引
-    0xFE, 0xFD, 0xFB, 0xF7, 0xEF, 0xDF, 0xBF, 0x7F
-};
 
 //运算种类标记变量
 bit flag_add = 0;
 bit flag_sub = 0;
 bit flag_mul = 0;
 bit flag_div = 0;
-bit flag_res = 0;
 //以下变量定义为全局变量方便函数的编写
 unsigned long result = 0;                //保存运算结果
 unsigned long op = 0;                    //保存参与运算的数字
@@ -60,6 +56,12 @@ void KeyScan();
 
 void main()
 {
+    //注意此处的中断时间需要考虑两个方面
+    //一是数码管扫描刷新率要较高（扫描完8位最好在10ms之内完成，可以粗略认为扫描一位需要1ms）
+    //那么中断时间在1~2ms的刷新率都是较高的
+    //二是人按下按键在到松手的时间，一般在100ms左右，刻意加速也只能到40~50ms左右
+    //所以中断扫描时间在1~2ms，也能够满足在这个时间内轮询完所有矩阵按键的状态
+    //这里推荐中断时间采用1ms
     EA = 1;                     //使能总中断
     TMOD = 0x01;                //使用定时器0的工作模式1
     TH0 = 0xFC;                 //中断间隔时间为1ms
@@ -79,12 +81,12 @@ void ShowNumber(unsigned long num)
 {
     signed char i;              //注意使用有符号类型防止溢出
     unsigned char buf[8];       //显示转换缓冲区
-    for(i = 7; i >= 0; i--)     //将num转换为数组表示
+    for(i = 7; i >= 0; i--)     //将num转换为数组表示，此处数组中逆序存放数字是为了便于后面遍历
     {
         buf[i] = num % 10;
         num /= 10;
     }
-    for(i = 0; i < 7; i++)      //去除前缀0
+    for(i = 0; i <= 6; i++)      //去除前缀0
     {
         if(buf[i] == 0)
             LedBuf[i] = 0x00;
@@ -218,7 +220,7 @@ void KeyDriver()
     {
         for(j = 0; j < 4; j++)
         {
-            if(backup[i][j] != KeySta[i][j]) //检测按键状态变化，即检测是按下，还是松手，保证按一次按键不会产生多次效果
+            if(backup[i][j] != KeySta[i][j]) //检测按键状态变化，若这一次与前一次状态不同，则按键产生了动作，从而根据需要来执行操作
             {
                 if(backup[i][j] != 0)        //若该按键按下
                 {
@@ -260,7 +262,7 @@ void KeyScan()
     }
 
     keyrow++;                                                //准备进行下一行的扫描
-    keyrow = keyrow & 0x03;                                  //控制行索引在0~3以内变化
+    keyrow &= 0x03;                                  //控制行索引在0~3以内变化
     switch(keyrow)                                           //根据行索引改变电平，以进行对应某行按键的扫描
     {
         case 0: KEY_ROW_4 = 1; KEY_ROW_1 = 0; break;

@@ -1,0 +1,5 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\key_matrix_calculator" 
+
+PRINT(".\Listings\key_matrix_calculator.map")

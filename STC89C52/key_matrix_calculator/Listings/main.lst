@@ -1,0 +1,345 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 21:56:04 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OMF2 OPTIMIZE(8,SPEED) BROWSE DEBUG PRINT(.\Listings\main.lst) OB
+                    -JECT(.\Objects\main.obj)
+
+line level    source
+
+   1          /*
+   2           * @Descripttion: 简易四则运算计算器（参与运算的数、最终结果和中间结果都只能�
+             -��自然数，不支持运算优先级判断，只能按照输入顺序依次计算）
+   3           * @Author: 五月雨
+   4           * @Date: 2022-01-21 15:33:38
+   5           * @LastEditors: 五月雨
+   6           * @LastEditTime: 2022-01-22 21:10:56
+   7           * @Board: 清翔51开发板
+   8           * @Chip: STC89C52
+   9           */
+  10          #include <STC89C5xRC.H>
+  11          
+  12          sbit SEG = P2^6;                        //数码管位选
+  13          sbit DIG = P2^7;                        //数码管段选
+  14          sbit KEY_ROW_1 = P3^0;
+  15          sbit KEY_ROW_2 = P3^1;
+  16          sbit KEY_ROW_3 = P3^2;
+  17          sbit KEY_ROW_4 = P3^3;
+  18          sbit KEY_COL_1 = P3^4;     
+  19          sbit KEY_COL_2 = P3^5;
+  20          sbit KEY_COL_3 = P3^6;
+  21          sbit KEY_COL_4 = P3^7;
+  22          
+  23          unsigned char code LedChar[] = {        //数码管显示字符转换表
+  24              0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 
+  25              0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71
+  26          };
+  27          unsigned char LedBuf[] = {              //数码管显示缓冲区
+  28              0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+  29          };
+  30          unsigned char code KeyCodeMap[4][4] = { //按键映射
+  31              {0x31, 0x32, 0x33, 0x25},           /*  1    2    3    +  */
+  32              {0x34, 0x35, 0x36, 0x26},           /*  4    5    6    -  */
+  33              {0x37, 0x38, 0x39, 0x27},           /*  7    8    9    *  */
+  34              {0x30, 0x1B, 0x0D, 0x28}            /*  0    CE   =    /  */
+  35          };
+  36          unsigned char KeySta[4][4] = {          //按键当前状态存储
+  37              {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}
+  38          };
+  39          
+  40          //运算种类标记变量
+  41          bit flag_add = 0;
+  42          bit flag_sub = 0;
+  43          bit flag_mul = 0;
+  44          bit flag_div = 0;
+  45          //以下变量定义为全局变量方便函数的编写
+  46          unsigned long result = 0;                //保存运算结果
+  47          unsigned long op = 0;                    //保存参与运算的数字
+  48          unsigned char cnt_opration = 0;          //记录运算次数，用于多次运算中判断是否需要计
+             -算中间结果
+  49          
+  50          void ShowNumber(unsigned long num);
+  51          void DoCalculate();
+  52          void KeyAction(unsigned char keycode);
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 21:56:04 PAGE 2   
+
+  53          void KeyDriver();
+  54          void LedScan(unsigned char x);
+  55          void KeyScan();
+  56          
+  57          void main()
+  58          {
+  59   1          EA = 1;                     //使能总中断
+  60   1          TMOD = 0x01;                //使用定时器0的工作模式1
+  61   1          TH0 = 0xFC;                 //中断间隔时间为1ms
+  62   1          TL0 = 0x67;
+  63   1          ET0 = 1;                    //使能T0中断
+  64   1          TR0 = 1;                    //开启T0
+  65   1          LedBuf[7] = LedChar[0];     //上电显示0
+  66   1      
+  67   1          while (1)
+  68   1          {
+  69   2              KeyDriver();
+  70   2          }
+  71   1      }
+  72          
+  73          /* 将一个无符号长整形的数字显示到数码管上，num为待显示数字 */
+  74          void ShowNumber(unsigned long num)
+  75          {
+  76   1          signed char i;              //注意使用有符号类型防止溢出
+  77   1          unsigned char buf[8];       //显示转换缓冲区
+  78   1          for(i = 7; i >= 0; i--)     //将num转换为数组表示，此处数组中逆序存放数字是为了
+             -便于后面遍历
+  79   1          {
+  80   2              buf[i] = num % 10;
+  81   2              num /= 10;
+  82   2          }
+  83   1          for(i = 0; i <= 6; i++)      //去除前缀0
+  84   1          {
+  85   2              if(buf[i] == 0)
+  86   2                  LedBuf[i] = 0x00;
+  87   2              else
+  88   2                  break;
+  89   2          }
+  90   1          for( ; i <= 7; i++)         //剩余低位转换为数码管显示字符
+  91   1          {
+  92   2              LedBuf[i] = LedChar[buf[i]];
+  93   2          }
+  94   1      }
+  95          
+  96          /* 运算执行函数，根据运算种类标记变量来执行 */
+  97          void DoCalculate()
+  98          {
+  99   1          if(flag_add)
+ 100   1          {
+ 101   2              result += op;
+ 102   2              flag_add = 0;
+ 103   2          }
+ 104   1          else if(flag_sub)
+ 105   1          {
+ 106   2              result -= op;
+ 107   2              flag_sub = 0;
+ 108   2          }
+ 109   1          else if(flag_mul)
+ 110   1          {
+ 111   2              result *= op;
+ 112   2              flag_mul = 0;
+ 113   2          }
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 21:56:04 PAGE 3   
+
+ 114   1          else if(flag_div)
+ 115   1          {
+ 116   2              result /= op;
+ 117   2              flag_div = 0;
+ 118   2          }
+ 119   1      }
+ 120          
+ 121          /* 按键动作函数，根据键码执行相应的操作，keycode为按键键码 */
+ 122          void KeyAction(unsigned char keycode)
+ 123          {
+ 124   1          if((keycode >= 0x30) && (keycode <= 0x39))  //输入0~9的数字
+ 125   1          {
+ 126   2              op = (op * 10) + (keycode - 0x30);
+ 127   2              ShowNumber(op);
+ 128   2          }
+ 129   1          else if(keycode == 0x25)    //加法运算
+ 130   1          {
+ 131   2              if(cnt_opration > 0)    //若式子中运算次数大于一，先进行一次运算
+ 132   2              {
+ 133   3                  DoCalculate();      //得到的运算结果用于进行下一次运算
+ 134   3                  cnt_opration--;
+ 135   3              }
+ 136   2              else
+ 137   2              {
+ 138   3                  result = op;        //将op的值存储到result中，便于第二个运算数的输入
+ 139   3              } 
+ 140   2              flag_add = 1;           //标记有一次加运算需要执行
+ 141   2              cnt_opration++;         //等待执行的运算数量加一
+ 142   2              op = 0;                 //清零op变量，以存储下一个运算数的输入
+ 143   2          }
+ 144   1          else if(keycode == 0x26)    //减法运算
+ 145   1          {
+ 146   2              if(cnt_opration > 0)
+ 147   2              {
+ 148   3                  DoCalculate();
+ 149   3                  cnt_opration--;
+ 150   3              }
+ 151   2              else
+ 152   2              {
+ 153   3                  result = op;
+ 154   3              } 
+ 155   2              flag_sub = 1;
+ 156   2              cnt_opration++;
+ 157   2              op = 0; 
+ 158   2          }
+ 159   1          else if(keycode == 0x27)    //乘法运算
+ 160   1          {
+ 161   2              if(cnt_opration > 0)
+ 162   2              {
+ 163   3                  DoCalculate();
+ 164   3                  cnt_opration--;
+ 165   3              }
+ 166   2              else
+ 167   2              {
+ 168   3                  result = op;
+ 169   3              } 
+ 170   2              flag_mul = 1;
+ 171   2              cnt_opration++;
+ 172   2              op = 0;
+ 173   2          }
+ 174   1          else if(keycode == 0x28)    //除法运算
+ 175   1          {
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 21:56:04 PAGE 4   
+
+ 176   2              if(cnt_opration > 0)
+ 177   2              {
+ 178   3                  DoCalculate();
+ 179   3                  cnt_opration--;
+ 180   3              }
+ 181   2              else
+ 182   2              {
+ 183   3                  result = op;
+ 184   3              } 
+ 185   2              flag_div = 1;
+ 186   2              cnt_opration++;
+ 187   2              op = 0;
+ 188   2          }
+ 189   1          else if(keycode == 0x0D)    //等号
+ 190   1          {
+ 191   2              DoCalculate();
+ 192   2              ShowNumber(result);
+ 193   2              result = 0;
+ 194   2              cnt_opration = 0;
+ 195   2              op = 0;
+ 196   2          }
+ 197   1          else if (keycode == 0x1B)   //标准计算器中的CE操作
+ 198   1          {
+ 199   2              op = 0;
+ 200   2              ShowNumber(op);
+ 201   2          }
+ 202   1      }
+ 203          
+ 204          /* 按键驱动函数，检测按键动作，调度相应动作函数 */
+ 205          void KeyDriver()
+ 206          {
+ 207   1          unsigned char i, j;
+ 208   1          static unsigned char backup[4][4] = {    //按键状态备份，保存前一次的值
+ 209   1              {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}
+ 210   1          };
+ 211   1      
+ 212   1          //矩阵键盘按键状态循环检测
+ 213   1          for(i = 0; i < 4; i++)
+ 214   1          {
+ 215   2              for(j = 0; j < 4; j++)
+ 216   2              {
+ 217   3                  if(backup[i][j] != KeySta[i][j]) //检测按键状态变化，若这一次与前一次状态�
+             -�同，则按键产生了动作，从而根据需要来执行操作
+ 218   3                  {
+ 219   4                      if(backup[i][j] != 0)        //若该按键按下
+ 220   4                      {
+ 221   5                          KeyAction(KeyCodeMap[i][j]);
+ 222   5                      }
+ 223   4                      backup[i][j] = KeySta[i][j];
+ 224   4                  }
+ 225   3              }
+ 226   2          }
+ 227   1      }
+ 228          
+ 229          /* 按键扫描函数，需要在定时中断中调用 */
+ 230          void KeyScan()
+ 231          {
+ 232   1          unsigned char keycol;                                    //矩阵按键扫描列索引
+ 233   1          static unsigned char keyrow = 0;                         //矩阵按键扫描行索引
+ 234   1          static unsigned char keybuf[4][4] = {                    //矩阵按键状态缓冲区
+ 235   1              {0xFF, 0xFF, 0xFF, 0xFF}, {0xFF, 0xFF, 0xFF, 0xFF},
+ 236   1              {0xFF, 0xFF, 0xFF, 0xFF}, {0xFF, 0xFF, 0xFF, 0xFF}
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 21:56:04 PAGE 5   
+
+ 237   1          };
+ 238   1      
+ 239   1          //将当前行的每个按键状态存入缓冲区中
+ 240   1          keybuf[keyrow][0] = (keybuf[keyrow][0] << 1) | KEY_COL_1;
+ 241   1          keybuf[keyrow][1] = (keybuf[keyrow][1] << 1) | KEY_COL_2;
+ 242   1          keybuf[keyrow][2] = (keybuf[keyrow][2] << 1) | KEY_COL_3;
+ 243   1          keybuf[keyrow][3] = (keybuf[keyrow][3] << 1) | KEY_COL_4;
+ 244   1      
+ 245   1          //由于机械按键的抖动时间一般在10ms内
+ 246   1          //此处扫描针对于每个按键连续采样四次，采样时间为1ms
+ 247   1          //由于每次中断只扫描一行，下列判断成立的条件为
+ 248   1          //当一个按键连续16ms保持按下或弹起，则可认为按键就是按下或弹起状态
+ 249   1          //这样既检测到了按键状态，又能达到去抖效果
+ 250   1          for(keycol = 0; keycol < 4; keycol++)
+ 251   1          {
+ 252   2              if((keybuf[keyrow][keycol] & 0x0F) == 0x00)          //按键按下
+ 253   2                  KeySta[keyrow][keycol] = 0;
+ 254   2              else if((keybuf[keyrow][keycol] & 0x0F) == 0x0F)     //按键弹起
+ 255   2                  KeySta[keyrow][keycol] = 1;
+ 256   2          }
+ 257   1      
+ 258   1          keyrow++;                                                //准备进行下一行的扫描
+ 259   1          keyrow = keyrow & 0x03;                                  //控制行索引在0~3以内变化
+ 260   1          switch(keyrow)                                           //根据行索引改变电平，以进行对�
+             -��某行按键的扫描
+ 261   1          {
+ 262   2              case 0: KEY_ROW_4 = 1; KEY_ROW_1 = 0; break;
+ 263   2              case 1: KEY_ROW_1 = 1; KEY_ROW_2 = 0; break;
+ 264   2              case 2: KEY_ROW_2 = 1; KEY_ROW_3 = 0; break;
+ 265   2              case 3: KEY_ROW_3 = 1; KEY_ROW_4 = 0; break;
+ 266   2              default: break;
+ 267   2          }
+ 268   1      }
+ 269          
+ 270          /* 数码管动态扫描刷新显示函数，需在定时器中断中调用 */
+ 271          void LedScan(unsigned char x)
+ 272          {
+ 273   1          P0 = 0x00;      //防止产生交替重影
+ 274   1          SEG = 1;
+ 275   1          SEG = 0;
+ 276   1      
+ 277   1          P0 = 0xFF;      //位消隐
+ 278   1          DIG = 1;
+ 279   1          P0 &= ~(1 << x);
+ 280   1          DIG = 0;
+ 281   1          
+ 282   1          P0 = 0x00;      //段消隐
+ 283   1          SEG = 1;
+ 284   1          P0 = LedBuf[x];
+ 285   1          SEG = 0;
+ 286   1      }
+ 287          
+ 288          /* T0中断服务函数，用于数码管显示扫描与按键扫描 */
+ 289          void InterruptTimer0() interrupt 1
+ 290          {
+ 291   1          static unsigned idx = 0;                        //数码管扫描位索引
+ 292   1          
+ 293   1          TH0 = 0xFC;                                     //T0值重载
+ 294   1          TL0 = 0x67;
+ 295   1      
+ 296   1          LedScan(idx);
+ 297   1          if(idx < 7)
+C51 COMPILER V9.60.0.0   MAIN                                                              01/22/2022 21:56:04 PAGE 6   
+
+ 298   1              idx++;
+ 299   1          else 
+ 300   1              idx = 0;
+ 301   1          KeyScan();
+ 302   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1094    ----
+   CONSTANT SIZE    =     32    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     68      16
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      4    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

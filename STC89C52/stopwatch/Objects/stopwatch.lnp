@@ -1,0 +1,5 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\stopwatch" 
+
+PRINT(".\Listings\stopwatch.map")
