@@ -1,0 +1,260 @@
+LX51 LINKER/LOCATER V4.66.97.0                                                          01/31/2022  11:48:36  PAGE 1
+
+
+LX51 LINKER/LOCATER V4.66.97.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\LX51.EXE .\build\Target 1\main.o, .\build\Target 1\STARTUP.o, C:\KEIL_V5\C51\LIB\C51S.LIB TO .\build\
+>> Target 1\stopwatch PRINT (.\build\Target 1\stopwatch.map) REMOVEUNUSED
+
+
+CPU MODE:     8051 MODE
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\build\Target 1\main.o (MAIN)
+         COMMENT TYPE 0: C51 V9.60.0.0
+  .\build\Target 1\STARTUP.o (?C_STARTUP)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?UIDIV)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?LMUL)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULDIV)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULSHR)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+
+
+ACTIVE MEMORY CLASSES OF MODULE:  .\build\Target 1\stopwatch (MAIN)
+
+BASE        START       END         USED      MEMORY CLASS
+==========================================================
+C:000000H   C:000000H   C:00FFFFH   0004E9H   CODE
+I:000000H   I:000000H   I:00007FH   000029H   DATA
+C:000000H   C:000000H   C:00FFFFH   000010H   CONST
+I:000020H.0 I:000020H.0 I:00002FH.7 000000H.2 BIT
+I:000000H   I:000000H   I:0000FFH   000001H   IDATA
+
+
+MEMORY MAP OF MODULE:  .\build\Target 1\stopwatch (MAIN)
+
+
+START     STOP      LENGTH    ALIGN  RELOC    MEMORY CLASS   SEGMENT NAME
+=========================================================================
+
+* * * * * * * * * * *   D A T A   M E M O R Y   * * * * * * * * * * * * *
+000000H   000007H   000008H   ---    AT..     DATA           "REG BANK 0"
+000008H   00000DH   000006H   BYTE   UNIT     DATA           _DATA_GROUP_
+00000EH.0 00001FH.7 000012H.0 ---    ---      **GAP**
+000020H.0 000020H.1 000000H.2 BIT    UNIT     BIT            ?BI?MAIN
+000020H.2 000020H   000000H.6 ---    ---      **GAP**
+000021H   00003BH   00001BH   BYTE   UNIT     DATA           ?DT?MAIN
+00003CH   00003CH   000001H   BYTE   UNIT     IDATA          ?STACK
+
+* * * * * * * * * * *   C O D E   M E M O R Y   * * * * * * * * * * * * *
+000000H   000002H   000003H   ---    OFFS..   CODE           ?CO??C_STARTUP?0
+000003H   00000AH   000008H   ---    ---      **GAP**
+00000BH   00000DH   000003H   BYTE   OFFS..   CODE           ?MAIN?0000B
+00000EH   000192H   000185H   BYTE   UNIT     CODE           ?C?LIB_CODE
+000193H   00022FH   00009DH   BYTE   UNIT     CODE           ?PR?STOPWATCHDISPLAY?MAIN
+000230H   0002C0H   000091H   BYTE   UNIT     CODE           ?PR?_CONFIGTIMER0MS?MAIN
+0002C1H   00034CH   00008CH   BYTE   UNIT     CODE           ?C_C51STARTUP
+00034DH   0003A9H   00005DH   BYTE   UNIT     CODE           ?PR?KEYSCAN?MAIN
+0003AAH   0003EBH   000042H   BYTE   UNIT     CODE           ?PR?KEYDRIVER?MAIN
+0003ECH   000429H   00003EH   BYTE   UNIT     CODE           ?PR?LEDSCAN?MAIN
+00042AH   000464H   00003BH   BYTE   UNIT     CODE           ?PR?INTERRUPTTIMER0?MAIN
+000465H   000498H   000034H   BYTE   UNIT     CODE           ?C_INITSEG
+000499H   0004C5H   00002DH   BYTE   UNIT     CODE           ?PR?STOPWATCHCOUNT?MAIN
+LX51 LINKER/LOCATER V4.66.97.0                                                        01/31/2022  11:48:36  PAGE 2
+
+
+0004C6H   0004DBH   000016H   BYTE   UNIT     CODE           ?PR?MAIN?MAIN
+0004DCH   0004E7H   00000CH   BYTE   UNIT     CODE           ?PR?STOPWATCHRESET?MAIN
+0004E8H   0004F0H   000009H   BYTE   UNIT     CODE           ?PR?STOPWATCHACTION?MAIN
+0004F1H   000500H   000010H   BYTE   UNIT     CONST          ?CO?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   .\build\Target 1\stopwatch (MAIN)
+
+
+FUNCTION/MODULE              BIT_GROUP   DATA_GROUP 
+--> CALLED FUNCTION/MODULE  START  STOP  START  STOP
+====================================================
+INTERRUPTTIMER0/MAIN        ----- -----  ----- -----
+  +--> LEDSCAN/MAIN
+  +--> KEYSCAN/MAIN
+  +--> STOPWATCHCOUNT/MAIN
+
+LEDSCAN/MAIN                ----- -----  ----- -----
+
+KEYSCAN/MAIN                ----- -----  ----- -----
+
+STOPWATCHCOUNT/MAIN         ----- -----  ----- -----
+
+*** NEW ROOT **************
+
+?C_C51STARTUP               ----- -----  ----- -----
+  +--> MAIN/MAIN
+  +--> ?C_INITSEG
+
+MAIN/MAIN                   ----- -----  ----- -----
+  +--> _CONFIGTIMER0MS/MAIN
+  +--> STOPWATCHDISPLAY/MAIN
+  +--> KEYDRIVER/MAIN
+
+_CONFIGTIMER0MS/MAIN        ----- -----  0008H 000DH
+
+STOPWATCHDISPLAY/MAIN       ----- -----  0008H 000BH
+
+KEYDRIVER/MAIN              ----- -----  ----- -----
+  +--> STOPWATCHRESET/MAIN
+  +--> STOPWATCHACTION/MAIN
+
+STOPWATCHRESET/MAIN         ----- -----  ----- -----
+
+STOPWATCHACTION/MAIN        ----- -----  ----- -----
+
+?C_INITSEG                  ----- -----  ----- -----
+
+
+
+PUBLIC SYMBOLS OF MODULE:  .\build\Target 1\stopwatch (MAIN)
+
+
+      VALUE       CLASS    TYPE      PUBLIC SYMBOL NAME
+      =================================================
+      00000000H   NUMBER   ---       ?C?CODESEG
+      01000063H   CODE     ---       ?C?LMUL
+      0100000EH   CODE     ---       ?C?UIDIV
+      010000EEH   CODE     ---       ?C?ULDIV
+      01000180H   CODE     ---       ?C?ULSHR
+      00000000H   NUMBER   ---       ?C?XDATASEG
+      01000308H   CODE     ---       ?C_START
+      01000000H   CODE     ---       ?C_STARTUP
+      01000230H   CODE     ---       _ConfigTimer0ms
+LX51 LINKER/LOCATER V4.66.97.0                                                        01/31/2022  11:48:36  PAGE 3
+
+
+      00000039H   DATA     BYTE      DecimalPart
+      0000003AH   DATA     WORD      IntegerPart
+      0100042AH   CODE     ---       InterruptTimer0
+      010003AAH   CODE     ---       KeyDriver
+      0100034DH   CODE     ---       KeyScan
+      0000002BH   DATA     ---       KeyStaCur
+      00000031H   DATA     ---       LedBuf
+      010004F1H   CONST    ---       LedChar
+      010003ECH   CODE     ---       LedScan
+      010004C6H   CODE     ---       main
+      010004E8H   CODE     ---       StopwatchAction
+      01000499H   CODE     ---       StopwatchCount
+      01000193H   CODE     ---       StopwatchDisplay
+      00000020H.0 BIT      BIT       StopwatchRefresh
+      010004DCH   CODE     ---       StopwatchReset
+      00000020H.1 BIT      BIT       StopwatchRunning
+      0000002FH   DATA     BYTE      T0RH
+      00000030H   DATA     BYTE      T0RL
+
+
+
+SYMBOL TABLE OF MODULE:  .\build\Target 1\stopwatch (MAIN)
+
+      VALUE       REP       CLASS    TYPE      SYMBOL NAME
+      ====================================================
+      ---         MODULE    ---      ---       MAIN
+      0000003AH   PUBLIC    DATA     WORD      IntegerPart
+      00000039H   PUBLIC    DATA     BYTE      DecimalPart
+      00000031H   PUBLIC    DATA     ---       LedBuf
+      00000020H.1 PUBLIC    BIT      BIT       StopwatchRunning
+      00000030H   PUBLIC    DATA     BYTE      T0RL
+      0000002FH   PUBLIC    DATA     BYTE      T0RH
+      00000020H.0 PUBLIC    BIT      BIT       StopwatchRefresh
+      0000002BH   PUBLIC    DATA     ---       KeyStaCur
+      010004F1H   PUBLIC    CONST    ---       LedChar
+      0100042AH   PUBLIC    CODE     ---       InterruptTimer0
+      01000499H   PUBLIC    CODE     ---       StopwatchCount
+      0100034DH   PUBLIC    CODE     ---       KeyScan
+      010003ECH   PUBLIC    CODE     ---       LedScan
+      010003AAH   PUBLIC    CODE     ---       KeyDriver
+      010004DCH   PUBLIC    CODE     ---       StopwatchReset
+      010004E8H   PUBLIC    CODE     ---       StopwatchAction
+      01000193H   PUBLIC    CODE     ---       StopwatchDisplay
+      01000230H   PUBLIC    CODE     ---       _ConfigTimer0ms
+      010004C6H   PUBLIC    CODE     ---       main
+
+      010004C6H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000230H   BLOCK     CODE     ---       LVL=0
+      01000234H   BLOCK     CODE     NEAR LAB  LVL=1
+      0000000AH   SYMBOL    DATA     VOID      tmp
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000193H   BLOCK     CODE     ---       LVL=0
+      01000193H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000007H   SYMBOL    DATA     VOID      i
+      00000008H   SYMBOL    DATA     VOID      buf
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010004E8H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+LX51 LINKER/LOCATER V4.66.97.0                                                        01/31/2022  11:48:36  PAGE 4
+
+
+      010004DCH   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010003AAH   BLOCK     CODE     ---       LVL=0
+      010003AAH   BLOCK     CODE     NEAR LAB  LVL=1
+      00000007H   SYMBOL    DATA     VOID      i
+      00000021H   SYMBOL    DATA     VOID      backup
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010003ECH   BLOCK     CODE     ---       LVL=0
+      010003ECH   BLOCK     CODE     NEAR LAB  LVL=1
+      00000025H   SYMBOL    DATA     VOID      idx
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      0100034DH   BLOCK     CODE     ---       LVL=0
+      0100034DH   BLOCK     CODE     NEAR LAB  LVL=1
+      00000007H   SYMBOL    DATA     VOID      i
+      00000026H   SYMBOL    DATA     VOID      keybuf
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000499H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      0100042AH   BLOCK     CODE     ---       LVL=0
+      01000439H   BLOCK     CODE     NEAR LAB  LVL=1
+      0000002AH   SYMBOL    DATA     VOID      timer_2ms
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      ---         MODULE    ---      ---       ?C_STARTUP
+      01000000H   PUBLIC    CODE     ---       ?C_STARTUP
+
+      ---         MODULE    ---      ---       ?C_INIT
+      01000308H   PUBLIC    CODE     ---       ?C_START
+
+      ---         MODULE    ---      ---       ?C?UIDIV
+      0100000EH   PUBLIC    CODE     ---       ?C?UIDIV
+
+      ---         MODULE    ---      ---       ?C?LMUL
+      01000063H   PUBLIC    CODE     ---       ?C?LMUL
+
+      ---         MODULE    ---      ---       ?C?ULDIV
+      010000EEH   PUBLIC    CODE     ---       ?C?ULDIV
+
+      ---         MODULE    ---      ---       ?C?ULSHR
+      01000180H   PUBLIC    CODE     ---       ?C?ULSHR
+
+Program Size: data=42.2 xdata=0 const=16 code=1257
+LX51 RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

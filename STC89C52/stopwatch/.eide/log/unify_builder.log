@@ -242,3 +242,112 @@ COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights res
 *** ERROR C202 IN LINE 32 OF .\MAIN.C: 'StopwatchRefresh': undefined identifier
 C51 COMPILATION COMPLETE.  1 WARNING(S),  2 ERROR(S)
 
+[2022-01-30 17:34:42]	[done]
+	build successfully !
+
+[2022-01-30 17:37:51]	[done]
+	build successfully !
+
+[2022-01-30 17:38:02]	[done]
+	build successfully !
+
+[2022-01-31 09:52:51]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\stopwatch\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C242 IN LINE 26 OF .\MAIN.C: 'scalar': too many initializers
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
+
+[2022-01-31 09:53:03]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\stopwatch\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** WARNING C206 IN LINE 43 OF .\MAIN.C: 'ConfigTimer0ms': missing function-prototype
+*** ERROR C267 IN LINE 43 OF .\MAIN.C: 'ConfigTimer0ms': requires ANSI-style prototype
+C51 COMPILATION COMPLETE.  1 WARNING(S),  1 ERROR(S)
+
+[2022-01-31 11:22:48]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\stopwatch\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** WARNING C206 IN LINE 43 OF .\MAIN.C: 'ConfigTimer0ms': missing function-prototype
+*** ERROR C267 IN LINE 43 OF .\MAIN.C: 'ConfigTimer0ms': requires ANSI-style prototype
+C51 COMPILATION COMPLETE.  1 WARNING(S),  1 ERROR(S)
+
+[2022-01-31 11:23:40]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\stopwatch\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C141 IN LINE 38 OF .\MAIN.C: syntax error near 'void', expected 'hdata'
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
+
+[2022-01-31 11:24:42]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\stopwatch\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** WARNING C275 IN LINE 98 OF .\MAIN.C: expression with possibly no effect
+*** ERROR C242 IN LINE 131 OF .\MAIN.C: 'scalar': too many initializers
+*** ERROR C202 IN LINE 160 OF .\MAIN.C: 'x': undefined identifier
+*** ERROR C202 IN LINE 165 OF .\MAIN.C: 'x': undefined identifier
+C51 COMPILATION COMPLETE.  1 WARNING(S),  3 ERROR(S)
+
+[2022-01-31 11:24:51]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\stopwatch\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** WARNING C275 IN LINE 98 OF .\MAIN.C: expression with possibly no effect
+*** ERROR C202 IN LINE 160 OF .\MAIN.C: 'x': undefined identifier
+*** ERROR C202 IN LINE 165 OF .\MAIN.C: 'x': undefined identifier
+C51 COMPILATION COMPLETE.  1 WARNING(S),  2 ERROR(S)
+
+[2022-01-31 11:25:07]	[done]
+	build successfully !
+
+[2022-01-31 11:26:51]	[done]
+	build successfully !
+
+[2022-01-31 11:28:29]	[done]
+	build successfully !
+
+[2022-01-31 11:31:23]	[done]
+	build successfully !
+
+[2022-01-31 11:35:18]	[done]
+	build successfully !
+
+[2022-01-31 11:37:41]	[done]
+	build successfully !
+
+[2022-01-31 11:39:34]	[done]
+	build successfully !
+
+[2022-01-31 11:43:47]	[done]
+	build successfully !
+
+[2022-01-31 11:46:26]	[done]
+	build successfully !
+
+[2022-01-31 11:46:44]	[done]
+	build successfully !
+
+[2022-01-31 11:47:23]	[done]
+	build successfully !
+
+[2022-01-31 11:47:42]	[done]
+	build successfully !
+
+[2022-01-31 11:48:23]	[done]
+	build successfully !
+
+[2022-01-31 11:48:36]	[done]
+	build successfully !
+
+[2022-01-31 11:50:32]	[done]
+	build successfully !
+

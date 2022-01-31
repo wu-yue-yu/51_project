@@ -1,4 +1,4 @@
-LX51 LINKER/LOCATER V4.66.97.0                                                          01/22/2022  15:15:58  PAGE 1
+LX51 LINKER/LOCATER V4.66.97.0                                                          01/30/2022  17:42:58  PAGE 1
 
 
 LX51 LINKER/LOCATER V4.66.97.0, INVOKED BY:
@@ -27,10 +27,10 @@ ACTIVE MEMORY CLASSES OF MODULE:  .\build\Target 1\key_matrix_calculator (MAIN)
 
 BASE        START       END         USED      MEMORY CLASS
 ==========================================================
-C:000000H   C:000000H   C:00FFFFH   000369H   CODE
-I:000000H   I:000000H   I:00007FH   00003CH   DATA
-C:000000H   C:000000H   C:00FFFFH   000028H   CONST
-I:000020H.0 I:000020H.0 I:00002FH.7 000000H.5 BIT
+C:000000H   C:000000H   C:00FFFFH   000650H   CODE
+I:000000H   I:000000H   I:00007FH   00005CH   DATA
+C:000000H   C:000000H   C:00FFFFH   000020H   CONST
+I:000020H.0 I:000020H.0 I:00002FH.7 000000H.4 BIT
 I:000000H   I:000000H   I:0000FFH   000001H   IDATA
 
 
@@ -42,34 +42,32 @@ START     STOP      LENGTH    ALIGN  RELOC    MEMORY CLASS   SEGMENT NAME
 
 * * * * * * * * * * *   D A T A   M E M O R Y   * * * * * * * * * * * * *
 000000H   000007H   000008H   ---    AT..     DATA           "REG BANK 0"
-000008H.0 00001FH.7 000018H.0 ---    ---      **GAP**
-000020H.0 000020H.4 000000H.5 BIT    UNIT     BIT            ?BI?MAIN
-000020H.5 000020H   000000H.3 ---    ---      **GAP**
-000021H   000054H   000034H   BYTE   UNIT     DATA           ?DT?MAIN
-000055H   000055H   000001H   BYTE   UNIT     IDATA          ?STACK
+000008H   000017H   000010H   BYTE   UNIT     DATA           _DATA_GROUP_
+000018H.0 00001FH.7 000008H.0 ---    ---      **GAP**
+000020H.0 000020H.3 000000H.4 BIT    UNIT     BIT            ?BI?MAIN
+000020H.4 000020H   000000H.4 ---    ---      **GAP**
+000021H   000064H   000044H   BYTE   UNIT     DATA           ?DT?MAIN
+000065H   000065H   000001H   BYTE   UNIT     IDATA          ?STACK
 
 * * * * * * * * * * *   C O D E   M E M O R Y   * * * * * * * * * * * * *
 000000H   000002H   000003H   ---    OFFS..   CODE           ?CO??C_STARTUP?0
 000003H   00000AH   000008H   ---    ---      **GAP**
 00000BH   00000DH   000003H   BYTE   OFFS..   CODE           ?MAIN?0000B
-00000EH   00012AH   00011DH   BYTE   UNIT     CODE           ?C?LIB_CODE
-00012BH   00020BH   0000E1H   BYTE   UNIT     CODE           ?PR?KEYSCAN?MAIN
-00020CH   000297H   00008CH   BYTE   UNIT     CODE           ?C_C51STARTUP
-000298H   0002E6H   00004FH   BYTE   UNIT     CODE           ?C_INITSEG
-0002E7H   00032BH   000045H   BYTE   UNIT     CODE           ?PR?INTERRUPTTIMER0?MAIN
-00032CH   000355H   00002AH   BYTE   UNIT     CODE           ?PR?_LEDSCAN?MAIN
-000356H   000370H   00001BH   BYTE   UNIT     CODE           ?PR?MAIN?MAIN
-000371H   000398H   000028H   BYTE   UNIT     CONST          ?CO?MAIN
-
-* * * * * * * * *   R E M O V E D     S E G M E N T S   * * * * * * * *
-   *DEL*:           00009DH   BYTE   UNIT     CODE           ?PR?_SHOWNUMBER?MAIN
-   *DEL*:           00000DH   BYTE   UNIT     DATA           ?DT?_SHOWNUMBER?MAIN
-   *DEL*:           00007FH   BYTE   UNIT     CODE           ?PR?DOCALCULATE?MAIN
-   *DEL*:           00013DH   BYTE   UNIT     CODE           ?PR?_KEYACTION?MAIN
-   *DEL*:           000001H   BYTE   UNIT     DATA           ?DT?_KEYACTION?MAIN
-LX51 LINKER/LOCATER V4.66.97.0                                                        01/22/2022  15:15:58  PAGE 2
+00000EH   00014AH   00013DH   BYTE   UNIT     CODE           ?PR?_KEYACTION?MAIN
+00014BH   000267H   00011DH   BYTE   UNIT     CODE           ?C?LIB_CODE
+000268H   000348H   0000E1H   BYTE   UNIT     CODE           ?PR?KEYSCAN?MAIN
+000349H   0003E5H   00009DH   BYTE   UNIT     CODE           ?PR?_SHOWNUMBER?MAIN
+0003E6H   000471H   00008CH   BYTE   UNIT     CODE           ?C_C51STARTUP
+000472H   0004F0H   00007FH   BYTE   UNIT     CODE           ?PR?DOCALCULATE?MAIN
+0004F1H   00056EH   00007EH   BYTE   UNIT     CODE           ?PR?KEYDRIVE?MAIN
+00056FH   0005CDH   00005FH   BYTE   UNIT     CODE           ?C_INITSEG
+0005CEH   000612H   000045H   BYTE   UNIT     CODE           ?PR?INTERRUPTTIMER0?MAIN
+000613H   00063CH   00002AH   BYTE   UNIT     CODE           ?PR?_LEDSCAN?MAIN
+00063DH   000657H   00001BH   BYTE   UNIT     CODE           ?PR?MAIN?MAIN
+000658H   000677H   000020H   BYTE   UNIT     CONST          ?CO?MAIN
 
 
+LX51 LINKER/LOCATER V4.66.97.0                                                        01/30/2022  17:42:58  PAGE 2
 
 
 
@@ -94,6 +92,18 @@ KEYSCAN/MAIN                ----- -----  ----- -----
   +--> ?C_INITSEG
 
 MAIN/MAIN                   ----- -----  ----- -----
+  +--> KEYDRIVE/MAIN
+
+KEYDRIVE/MAIN               ----- -----  0008H 0009H
+  +--> _KEYACTION/MAIN
+
+_KEYACTION/MAIN             ----- -----  000AH 000AH
+  +--> DOCALCULATE/MAIN
+  +--> _SHOWNUMBER/MAIN
+
+DOCALCULATE/MAIN            ----- -----  ----- -----
+
+_SHOWNUMBER/MAIN            ----- -----  000BH 0017H
 
 ?C_INITSEG                  ----- -----  ----- -----
 
@@ -105,40 +115,33 @@ PUBLIC SYMBOLS OF MODULE:  .\build\Target 1\key_matrix_calculator (MAIN)
       VALUE       CLASS    TYPE      PUBLIC SYMBOL NAME
       =================================================
       00000000H   NUMBER   ---       ?C?CODESEG
-      0100000EH   CODE     ---       ?C?LMUL
-      01000099H   CODE     ---       ?C?ULDIV
+      0100014BH   CODE     ---       ?C?LMUL
+      010001D6H   CODE     ---       ?C?ULDIV
       00000000H   NUMBER   ---       ?C?XDATASEG
-      01000253H   CODE     ---       ?C_START
+      0100042DH   CODE     ---       ?C_START
       01000000H   CODE     ---       ?C_STARTUP
-*DEL*:00000000H   CODE     ---       _KeyAction
-      0100032CH   CODE     ---       _LedScan
-*DEL*:00000000H   CODE     ---       _ShowNumber
-      00000034H   DATA     BYTE      cnt_opration
-      01000391H   CONST    ---       DecToHex
-*DEL*:00000000H   CODE     ---       DoCalculate
+      0100000EH   CODE     ---       _KeyAction
+      01000613H   CODE     ---       _LedScan
+      01000349H   CODE     ---       _ShowNumber
+      00000044H   DATA     BYTE      cnt_opration
+      01000472H   CODE     ---       DoCalculate
       00000020H.0 BIT      BIT       flag_add
       00000020H.1 BIT      BIT       flag_div
-      00000020H.4 BIT      BIT       flag_mul
-      00000020H.2 BIT      BIT       flag_res
-      00000020H.3 BIT      BIT       flag_sub
-      010002E7H   CODE     ---       InterruptTimer0
-      01000381H   CONST    ---       KeyCodeMap
-      *EXTERN*    CODE     ---       KeyDriver
-      0100012BH   CODE     ---       KeyScan
-      00000041H   DATA     ---       KeySta
-      00000039H   DATA     ---       LedBuf
-      01000371H   CONST    ---       LedChar
-      01000356H   CODE     ---       main
-      00000051H   DATA     DWORD     op
-      00000035H   DATA     DWORD     result
+      00000020H.3 BIT      BIT       flag_mul
+      00000020H.2 BIT      BIT       flag_sub
+      010005CEH   CODE     ---       InterruptTimer0
+      01000668H   CONST    ---       KeyCodeMap
+      010004F1H   CODE     ---       KeyDrive
+      01000268H   CODE     ---       KeyScan
+      00000051H   DATA     ---       KeySta
+      00000049H   DATA     ---       LedBuf
+LX51 LINKER/LOCATER V4.66.97.0                                                        01/30/2022  17:42:58  PAGE 3
 
 
-
-UNRESOLVED EXTERNAL SYMBOLS:
-LX51 LINKER/LOCATER V4.66.97.0                                                        01/22/2022  15:15:58  PAGE 3
-
-
-   KeyDriver
+      01000658H   CONST    ---       LedChar
+      0100063DH   CODE     ---       main
+      00000061H   DATA     DWORD     op
+      00000045H   DATA     DWORD     result
 
 
 
@@ -147,41 +150,67 @@ SYMBOL TABLE OF MODULE:  .\build\Target 1\key_matrix_calculator (MAIN)
       VALUE       REP       CLASS    TYPE      SYMBOL NAME
       ====================================================
       ---         MODULE    ---      ---       MAIN
-      00000051H   PUBLIC    DATA     DWORD     op
-      00000041H   PUBLIC    DATA     ---       KeySta
-      00000020H.4 PUBLIC    BIT      BIT       flag_mul
-      00000020H.3 PUBLIC    BIT      BIT       flag_sub
-      00000020H.2 PUBLIC    BIT      BIT       flag_res
+      00000061H   PUBLIC    DATA     DWORD     op
+      00000051H   PUBLIC    DATA     ---       KeySta
+      00000020H.3 PUBLIC    BIT      BIT       flag_mul
+      00000020H.2 PUBLIC    BIT      BIT       flag_sub
       00000020H.1 PUBLIC    BIT      BIT       flag_div
-      00000039H   PUBLIC    DATA     ---       LedBuf
+      00000049H   PUBLIC    DATA     ---       LedBuf
       00000020H.0 PUBLIC    BIT      BIT       flag_add
-      00000035H   PUBLIC    DATA     DWORD     result
-      00000034H   PUBLIC    DATA     BYTE      cnt_opration
-      01000391H   PUBLIC    CONST    ---       DecToHex
-      01000381H   PUBLIC    CONST    ---       KeyCodeMap
-      01000371H   PUBLIC    CONST    ---       LedChar
-      010002E7H   PUBLIC    CODE     ---       InterruptTimer0
-      0100032CH   PUBLIC    CODE     ---       _LedScan
-      0100012BH   PUBLIC    CODE     ---       KeyScan
-      01000356H   PUBLIC    CODE     ---       main
+      00000045H   PUBLIC    DATA     DWORD     result
+      00000044H   PUBLIC    DATA     BYTE      cnt_opration
+      01000668H   PUBLIC    CONST    ---       KeyCodeMap
+      01000658H   PUBLIC    CONST    ---       LedChar
+      010005CEH   PUBLIC    CODE     ---       InterruptTimer0
+      01000613H   PUBLIC    CODE     ---       _LedScan
+      01000268H   PUBLIC    CODE     ---       KeyScan
+      010004F1H   PUBLIC    CODE     ---       KeyDrive
+      0100000EH   PUBLIC    CODE     ---       _KeyAction
+      01000472H   PUBLIC    CODE     ---       DoCalculate
+      01000349H   PUBLIC    CODE     ---       _ShowNumber
+      0100063DH   PUBLIC    CODE     ---       main
 
-      01000356H   BLOCK     CODE     ---       LVL=0
+      0100063DH   BLOCK     CODE     ---       LVL=0
       ---         BLOCKEND  ---      ---       LVL=0
 
-      0100012BH   BLOCK     CODE     ---       LVL=0
-      0100012BH   BLOCK     CODE     NEAR LAB  LVL=1
-      00000007H   SYMBOL    DATA     VOID      keycol
-      00000021H   SYMBOL    DATA     VOID      keyrow
-      00000022H   SYMBOL    DATA     VOID      keybuf
+      01000349H   BLOCK     CODE     ---       LVL=0
+      01000351H   BLOCK     CODE     NEAR LAB  LVL=1
+      0000000FH   SYMBOL    DATA     VOID      i
+      00000010H   SYMBOL    DATA     VOID      buf
       ---         BLOCKEND  ---      ---       LVL=1
       ---         BLOCKEND  ---      ---       LVL=0
 
-      0100032CH   BLOCK     CODE     ---       LVL=0
+      01000472H   BLOCK     CODE     ---       LVL=0
       ---         BLOCKEND  ---      ---       LVL=0
 
-      010002E7H   BLOCK     CODE     ---       LVL=0
-      010002F6H   BLOCK     CODE     NEAR LAB  LVL=1
-      00000032H   SYMBOL    DATA     VOID      idx
+      0100000EH   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010004F1H   BLOCK     CODE     ---       LVL=0
+      010004F1H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000008H   SYMBOL    DATA     VOID      i
+      00000009H   SYMBOL    DATA     VOID      j
+      00000021H   SYMBOL    DATA     VOID      backup
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000268H   BLOCK     CODE     ---       LVL=0
+      01000268H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000007H   SYMBOL    DATA     VOID      keycol
+      00000031H   SYMBOL    DATA     VOID      keyrow
+      00000032H   SYMBOL    DATA     VOID      keybuf
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000613H   BLOCK     CODE     ---       LVL=0
+LX51 LINKER/LOCATER V4.66.97.0                                                        01/30/2022  17:42:58  PAGE 4
+
+
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010005CEH   BLOCK     CODE     ---       LVL=0
+      010005DDH   BLOCK     CODE     NEAR LAB  LVL=1
+      00000042H   SYMBOL    DATA     VOID      idx
       ---         BLOCKEND  ---      ---       LVL=1
       ---         BLOCKEND  ---      ---       LVL=0
 
@@ -189,27 +218,13 @@ SYMBOL TABLE OF MODULE:  .\build\Target 1\key_matrix_calculator (MAIN)
       01000000H   PUBLIC    CODE     ---       ?C_STARTUP
 
       ---         MODULE    ---      ---       ?C_INIT
-      01000253H   PUBLIC    CODE     ---       ?C_START
+      0100042DH   PUBLIC    CODE     ---       ?C_START
 
       ---         MODULE    ---      ---       ?C?LMUL
-      0100000EH   PUBLIC    CODE     ---       ?C?LMUL
+      0100014BH   PUBLIC    CODE     ---       ?C?LMUL
 
       ---         MODULE    ---      ---       ?C?ULDIV
-      01000099H   PUBLIC    CODE     ---       ?C?ULDIV
+      010001D6H   PUBLIC    CODE     ---       ?C?ULDIV
 
-
-
-*** ERROR L127: UNRESOLVED EXTERNAL SYMBOL
-    SYMBOL:  KeyDriver
-    MODULE:  .\build\Target 1\main.o (MAIN)
-
-LX51 LINKER/LOCATER V4.66.97.0                                                        01/22/2022  15:15:58  PAGE 4
-
-
-*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
-    SYMBOL:  KeyDriver
-    MODULE:  .\build\Target 1\main.o (MAIN)
-    ADDRESS: 100036DH
-
-Program Size: data=61.5 xdata=0 const=40 code=873
-LX51 RUN COMPLETE.  0 WARNING(S),  2 ERROR(S)
+Program Size: data=93.4 xdata=0 const=32 code=1616
+LX51 RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

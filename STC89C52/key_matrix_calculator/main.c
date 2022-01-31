@@ -3,7 +3,7 @@
  * @Author: 五月雨
  * @Date: 2022-01-21 15:33:38
  * @LastEditors: 五月雨
- * @LastEditTime: 2022-01-23 18:03:20
+ * @LastEditTime: 2022-01-30 17:47:38
  * @Board: 清翔51开发板
  * @Chip: STC89C52
  */
@@ -33,7 +33,7 @@ unsigned char code KeyCodeMap[4][4] = { //按键映射
     {0x37, 0x38, 0x39, 0x27},           /*  7    8    9    *  */
     {0x30, 0x1B, 0x0D, 0x28}            /*  0    CE   =    /  */
 };
-unsigned char KeySta[4][4] = {          //按键当前状态存储
+unsigned char KeyStaCur[4][4] = {          //按键当前状态存储
     {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}
 };
 
@@ -220,13 +220,13 @@ void KeyDriver()
     {
         for(j = 0; j < 4; j++)
         {
-            if(backup[i][j] != KeySta[i][j]) //检测按键状态变化，若这一次与前一次状态不同，则按键产生了动作，从而根据需要来执行操作
+            if(backup[i][j] != KeyStaCur[i][j]) //检测按键状态变化，若这一次与前一次状态不同，则按键产生了动作，从而根据需要来执行操作
             {
-                if(backup[i][j] != 0)        //若该按键按下
+                if(KeyStaCur[i][j] == 0)        //若该按键按下
                 {
                     KeyAction(KeyCodeMap[i][j]);
                 }
-                backup[i][j] = KeySta[i][j];
+                backup[i][j] = KeyStaCur[i][j];
             }
         }
     }
@@ -251,14 +251,14 @@ void KeyScan()
     //由于机械按键的抖动时间一般在10ms内
     //此处扫描针对于每个按键连续采样四次，采样时间为1ms
     //由于每次中断只扫描一行，下列判断成立的条件为
-    //当一个按键连续16ms保持按下或弹起，则可认为按键就是按下或弹起状态
+    //当一个按键连续16ms（中断间隔1ms × 按键列数4 × 采样次数4）保持按下或弹起，则可认为按键就是按下或弹起状态
     //这样既检测到了按键状态，又能达到去抖效果
     for(keycol = 0; keycol < 4; keycol++)
     {
         if((keybuf[keyrow][keycol] & 0x0F) == 0x00)          //按键按下
-            KeySta[keyrow][keycol] = 0;
+            KeyStaCur[keyrow][keycol] = 0;
         else if((keybuf[keyrow][keycol] & 0x0F) == 0x0F)     //按键弹起
-            KeySta[keyrow][keycol] = 1;
+            KeyStaCur[keyrow][keycol] = 1;
     }
 
     keyrow++;                                                //准备进行下一行的扫描
