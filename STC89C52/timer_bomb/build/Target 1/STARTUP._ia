@@ -1,0 +1,1 @@
+.\STARTUP.A51 PRINT(.\build\Target 1\STARTUP.lst) SET(SMALL) INCDIR(C:\Keil_v5\C51\INC\STC;C:\Keil_v5\C51\INC) OBJECT(.\build\Target 1\STARTUP.o) EP

@@ -1,0 +1,5 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\timer_bomb" 
+
+PRINT(".\Listings\timer_bomb.map")

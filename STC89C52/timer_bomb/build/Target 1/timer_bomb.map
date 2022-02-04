@@ -1,0 +1,236 @@
+LX51 LINKER/LOCATER V4.66.97.0                                                          02/04/2022  22:53:43  PAGE 1
+
+
+LX51 LINKER/LOCATER V4.66.97.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\LX51.EXE .\build\Target 1\main.o, .\build\Target 1\STARTUP.o, C:\KEIL_V5\C51\LIB\C51S.LIB TO .\build\
+>> Target 1\timer_bomb PRINT (.\build\Target 1\timer_bomb.map) REMOVEUNUSED
+
+
+CPU MODE:     8051 MODE
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\build\Target 1\main.o (MAIN)
+         COMMENT TYPE 0: C51 V9.60.0.0
+  .\build\Target 1\STARTUP.o (?C_STARTUP)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?LMUL)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULDIV)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?SLDIV)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULSHR)
+         COMMENT TYPE 1: A51 / ASM51 Assembler
+
+
+ACTIVE MEMORY CLASSES OF MODULE:  .\build\Target 1\timer_bomb (MAIN)
+
+BASE        START       END         USED      MEMORY CLASS
+==========================================================
+C:000000H   C:000000H   C:00FFFFH   000449H   CODE
+I:000000H   I:000000H   I:00007FH   00001AH   DATA
+I:000020H.0 I:000020H.0 I:00002FH.7 000000H.2 BIT
+C:000000H   C:000000H   C:00FFFFH   00000DH   CONST
+I:000000H   I:000000H   I:0000FFH   000001H   IDATA
+
+
+MEMORY MAP OF MODULE:  .\build\Target 1\timer_bomb (MAIN)
+
+
+START     STOP      LENGTH    ALIGN  RELOC    MEMORY CLASS   SEGMENT NAME
+=========================================================================
+
+* * * * * * * * * * *   D A T A   M E M O R Y   * * * * * * * * * * * * *
+000000H   000007H   000008H   ---    AT..     DATA           "REG BANK 0"
+000008H   000015H   00000EH   BYTE   UNIT     DATA           ?DT?MAIN
+000016H   000019H   000004H   BYTE   UNIT     DATA           _DATA_GROUP_
+00001AH.0 00001FH.7 000006H.0 ---    ---      **GAP**
+000020H.0 000020H.1 000000H.2 BIT    UNIT     BIT            ?BI?MAIN
+000020H.2 000020H   000000H.6 ---    ---      **GAP**
+000021H   000021H   000001H   BYTE   UNIT     IDATA          ?STACK
+
+* * * * * * * * * * *   C O D E   M E M O R Y   * * * * * * * * * * * * *
+000000H   000002H   000003H   ---    OFFS..   CODE           ?CO??C_STARTUP?0
+000003H   00000AH   000008H   ---    ---      **GAP**
+00000BH   00000DH   000003H   BYTE   OFFS..   CODE           ?MAIN?0000B
+00000EH   00001AH   00000DH   BYTE   UNIT     CONST          ?CO?MAIN
+00001BH   00001DH   000003H   BYTE   OFFS..   CODE           ?MAIN?0001B
+00001EH   00014DH   000130H   BYTE   UNIT     CODE           ?C?LIB_CODE
+00014EH   0001D9H   00008CH   BYTE   UNIT     CODE           ?C_C51STARTUP
+0001DAH   000254H   00007BH   BYTE   UNIT     CODE           ?PR?INTERRUPTTIMER1?MAIN
+000255H   0002C7H   000073H   BYTE   UNIT     CODE           ?PR?_CONFIGPWM?MAIN
+0002C8H   00032CH   000065H   BYTE   UNIT     CODE           ?PR?_CONFIGTIMER1?MAIN
+00032DH   000370H   000044H   BYTE   UNIT     CODE           ?C?LDIV
+000371H   0003AFH   00003FH   BYTE   UNIT     CODE           ?PR?_ADJUSTDUTYCYCLE?MAIN
+0003B0H   0003E6H   000037H   BYTE   UNIT     CODE           ?PR?INTERRUPTTIMER0?MAIN
+LX51 LINKER/LOCATER V4.66.97.0                                                        02/04/2022  22:53:43  PAGE 2
+
+
+0003E7H   000418H   000032H   BYTE   UNIT     CODE           ?PR?TRAFFICLIGHT?MAIN
+000419H   000441H   000029H   BYTE   UNIT     CODE           ?C_INITSEG
+000442H   00045DH   00001CH   BYTE   UNIT     CODE           ?PR?MAIN?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   .\build\Target 1\timer_bomb (MAIN)
+
+
+FUNCTION/MODULE              BIT_GROUP   DATA_GROUP 
+--> CALLED FUNCTION/MODULE  START  STOP  START  STOP
+====================================================
+INTERRUPTTIMER0/MAIN        ----- -----  ----- -----
+
+*** NEW ROOT **************
+
+INTERRUPTTIMER1/MAIN        ----- -----  ----- -----
+  +--> _ADJUSTDUTYCYCLE/MAIN
+
+_ADJUSTDUTYCYCLE/MAIN       ----- -----  ----- -----
+
+*** NEW ROOT **************
+
+?C_C51STARTUP               ----- -----  ----- -----
+  +--> MAIN/MAIN
+  +--> ?C_INITSEG
+
+MAIN/MAIN                   ----- -----  ----- -----
+  +--> _CONFIGPWM/MAIN
+  +--> _CONFIGTIMER1/MAIN
+  +--> TRAFFICLIGHT/MAIN
+
+_CONFIGPWM/MAIN             ----- -----  0016H 0016H
+
+_CONFIGTIMER1/MAIN          ----- -----  0016H 0019H
+
+TRAFFICLIGHT/MAIN           ----- -----  ----- -----
+
+?C_INITSEG                  ----- -----  ----- -----
+
+
+
+PUBLIC SYMBOLS OF MODULE:  .\build\Target 1\timer_bomb (MAIN)
+
+
+      VALUE       CLASS    TYPE      PUBLIC SYMBOL NAME
+      =================================================
+      00000000H   NUMBER   ---       ?C?CODESEG
+      0100001EH   CODE     ---       ?C?LMUL
+      0100032DH   CODE     ---       ?C?SLDIV
+      010000A9H   CODE     ---       ?C?ULDIV
+      0100013BH   CODE     ---       ?C?ULSHR
+      00000000H   NUMBER   ---       ?C?XDATASEG
+      01000195H   CODE     ---       ?C_START
+      01000000H   CODE     ---       ?C_STARTUP
+      01000371H   CODE     ---       _AdjustDutyCycle
+      01000255H   CODE     ---       _ConfigPWM
+      010002C8H   CODE     ---       _ConfigTimer1
+      00000011H   DATA     BYTE      color
+      00000020H.1 BIT      BIT       flag_1s
+      0000000EH   DATA     BYTE      HighRH
+      00000010H   DATA     BYTE      HighRL
+      010003B0H   CODE     ---       InterruptTimer0
+      010001DAH   CODE     ---       InterruptTimer1
+      00000014H   DATA     BYTE      LowRH
+LX51 LINKER/LOCATER V4.66.97.0                                                        02/04/2022  22:53:43  PAGE 3
+
+
+      00000015H   DATA     BYTE      LowRL
+      01000442H   CODE     ---       main
+      0000000AH   DATA     DWORD     PeriodCnt
+      0000000FH   DATA     BYTE      T1RH
+      00000013H   DATA     BYTE      T1RL
+      00000012H   DATA     BYTE      timer
+      010003E7H   CODE     ---       TrafficLight
+      0100000EH   CONST    ---       TrafficLightColor
+
+
+
+SYMBOL TABLE OF MODULE:  .\build\Target 1\timer_bomb (MAIN)
+
+      VALUE       REP       CLASS    TYPE      SYMBOL NAME
+      ====================================================
+      ---         MODULE    ---      ---       MAIN
+      00000015H   PUBLIC    DATA     BYTE      LowRL
+      00000014H   PUBLIC    DATA     BYTE      LowRH
+      00000013H   PUBLIC    DATA     BYTE      T1RL
+      00000012H   PUBLIC    DATA     BYTE      timer
+      00000011H   PUBLIC    DATA     BYTE      color
+      00000010H   PUBLIC    DATA     BYTE      HighRL
+      00000020H.1 PUBLIC    BIT      BIT       flag_1s
+      0000000FH   PUBLIC    DATA     BYTE      T1RH
+      0000000EH   PUBLIC    DATA     BYTE      HighRH
+      0000000AH   PUBLIC    DATA     DWORD     PeriodCnt
+      0100000EH   PUBLIC    CONST    ---       TrafficLightColor
+      010001DAH   PUBLIC    CODE     ---       InterruptTimer1
+      010003B0H   PUBLIC    CODE     ---       InterruptTimer0
+      010003E7H   PUBLIC    CODE     ---       TrafficLight
+      01000371H   PUBLIC    CODE     ---       _AdjustDutyCycle
+      01000255H   PUBLIC    CODE     ---       _ConfigPWM
+      010002C8H   PUBLIC    CODE     ---       _ConfigTimer1
+      01000442H   PUBLIC    CODE     ---       main
+
+      01000442H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010002C8H   BLOCK     CODE     ---       LVL=0
+      010002C8H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000016H   SYMBOL    DATA     VOID      tmp
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000255H   BLOCK     CODE     ---       LVL=0
+      01000257H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000004H   SYMBOL    DATA     VOID      high
+      00000002H   SYMBOL    DATA     VOID      low
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      01000371H   BLOCK     CODE     ---       LVL=0
+      01000371H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000004H   SYMBOL    DATA     VOID      high
+      00000002H   SYMBOL    DATA     VOID      low
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010003E7H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010003B0H   BLOCK     CODE     ---       LVL=0
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      010001DAH   BLOCK     CODE     ---       LVL=0
+LX51 LINKER/LOCATER V4.66.97.0                                                        02/04/2022  22:53:43  PAGE 4
+
+
+      010001F7H   BLOCK     CODE     NEAR LAB  LVL=1
+      00000008H   SYMBOL    DATA     VOID      idx
+      00000020H.0 SYMBOL    BIT      VOID      dir
+      00000009H   SYMBOL    DATA     VOID      cnt_50ms
+      01000011H   SYMBOL    CONST    VOID      table
+      ---         BLOCKEND  ---      ---       LVL=1
+      ---         BLOCKEND  ---      ---       LVL=0
+
+      ---         MODULE    ---      ---       ?C_STARTUP
+      01000000H   PUBLIC    CODE     ---       ?C_STARTUP
+
+      ---         MODULE    ---      ---       ?C_INIT
+      01000195H   PUBLIC    CODE     ---       ?C_START
+
+      ---         MODULE    ---      ---       ?C?LMUL
+      0100001EH   PUBLIC    CODE     ---       ?C?LMUL
+
+      ---         MODULE    ---      ---       ?C?ULDIV
+      010000A9H   PUBLIC    CODE     ---       ?C?ULDIV
+
+      ---         MODULE    ---      ---       ?C?SLDIV
+      0100032DH   PUBLIC    CODE     ---       ?C?SLDIV
+
+      ---         MODULE    ---      ---       ?C?ULSHR
+      0100013BH   PUBLIC    CODE     ---       ?C?ULSHR
+
+Program Size: data=27.2 xdata=0 const=13 code=1097
+LX51 RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

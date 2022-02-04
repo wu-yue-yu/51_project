@@ -67,7 +67,7 @@ void ConfigTimer0ms(unsigned int ms)
     tmp = 11059200 / 12;
     tmp = (tmp * ms) / 1000;
     tmp = 65536 - tmp;
-    tmp += 32;              //补偿中断相应延时造成的误差，通过keil测得约为32个机器周期
+    tmp += 21;              //补偿中断相应延时造成的误差，误差可通过keil测得
     TMOD = 0x01;
     /*
     可以写成这种形式防止影响到tmod的其他位，但这里没必要

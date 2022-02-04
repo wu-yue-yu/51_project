@@ -3,7 +3,7 @@
  * @Author: 五月雨
  * @Date: 2022-01-13 10:05:42
  * @LastEditors: 五月雨
- * @LastEditTime: 2022-01-13 10:48:44
+ * @LastEditTime: 2022-02-03 21:59:17
  * @Board:  清翔51开发板
  * @Chip： STC89C52
  */
@@ -13,44 +13,41 @@ void main()
 {
     unsigned char cntOverflow = 0;    //记录定时器溢出次数
     unsigned char cntMove = 0;        //记录移位次数
-    unsigned char leftFlag = 0;       //左移完成标志
-    unsigned char rightFlag = 0;      //右移完成标志
+    bit dir = 0;					  //流水灯移动方向标志变量，为0时左移
 
-    TMOD = 0x01;    //设置工作模式为1
-    TH0 = 0xB8;     //定时20ms
+    TMOD = 0x01;    				  //设置工作模式为1
+    TH0 = 0xB8;     				  //定时20ms
     TL0 = 0x00;
-    TR0 = 1;        //启用定时器
+    TR0 = 1;        				  //启用定时器
 
     while(1)
     {
         if(TF0 == 1)
         {
-            TF0 = 0;    //定时器重载
+            TF0 = 0;    						//定时器重载
             TH0 = 0xB8;
             TL0 = 0x00;
             cntOverflow++;
             if(cntOverflow >= 50)
             {
-                cntOverflow = 0;    //清零溢出次数，重新开始计时
-                if(leftFlag == 0)
+                cntOverflow = 0;    		    //清零溢出次数，重新开始计时
+                if(!dir)
                 {
                     P1 = ~(0x01 << cntMove);    //左移
                     cntMove++;
-                    if(cntMove == 8)    //左移完成，准备右移
+                    if(cntMove == 7)    	    //左移完成，准备右移
                     {
-                        leftFlag = 1;
-                        rightFlag = 0;
+						dir = 1;
                         cntMove = 0;
                     }
                 }
-                else if(rightFlag == 0)
+                else if(dir)
                 {
                     P1 = ~(0x80 >> cntMove);    //右移
                     cntMove++;
-                    if(cntMove == 8)    //右移完成，准备左移
+                    if(cntMove == 7)    	    //右移完成，准备左移
                     {
-                        leftFlag = 0;
-                        rightFlag = 1;
+						dir = 0;
                         cntMove = 0;
                     }
                 }

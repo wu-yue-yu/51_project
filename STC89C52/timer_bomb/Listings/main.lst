@@ -1,0 +1,235 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              02/04/2022 22:44:32 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OMF2 OPTIMIZE(8,SPEED) BROWSE DEBUG PRINT(.\Listings\main.lst) OB
+                    -JECT(.\Objects\main.obj)
+
+line level    source
+
+   1          /*
+   2           * @Descripttion: 
+   3           * @Author: 五月雨
+   4           * @Date: 2022-02-01 08:23:16
+   5           * @LastEditors: 五月雨
+   6           * @LastEditTime: 2022-02-04 22:43:14
+   7           * @Board: 
+   8           * @Chip: 
+   9           */
+  10          #include <STC89C5xRC.H>
+  11          
+  12          // sbit PWMOUT = P1^0;
+  13          #define PWMOUT P1
+  14          
+  15          unsigned char code TrafficLightColor[3] = {0xFE, 0xFD, 0xFB};
+  16          unsigned long PeriodCnt = 0;        //PWM周期计数值
+  17          unsigned char HighRH = 0;           //高电平重载值的高字节
+  18          unsigned char HighRL = 0;           //高电平重载值的低字节
+  19          unsigned char LowRH = 0;            //低电平重载值的高字节
+  20          unsigned char LowRL = 0;            //低电平重载值的低字节
+  21          unsigned char T1RH = 0;             //T1重载值的高字节
+  22          unsigned char T1RL = 0;             //T1重载值的低字节
+  23          unsigned char timer = 9;            //倒计时计数变量，先让红灯亮10秒
+  24          unsigned char color = 0;            //交通信号灯颜色指示变量，也相当于颜色数组索引
+  25          bit flag_1s = 0;                    //1秒定时标志变量
+  26          
+  27          void ConfigTimer1(unsigned int ms);
+  28          void ConfigPWM(unsigned int fr, unsigned char dc);
+  29          void AdjusDutyCycle(unsigned char dc);
+  30          void TrafficLight();
+  31          
+  32          void main()
+  33          {
+  34   1          EA = 1;                         //开总中断
+  35   1      
+  36   1          ConfigPWM(100, 10);             //用定时器T0配置并启动PWM
+  37   1          ConfigTimer1(50);             //用定时器T1调整占空比
+  38   1          while(1)
+  39   1          {
+  40   2              if(flag_1s)
+  41   2              {
+  42   3                  flag_1s = 0;
+  43   3                  TrafficLight();
+  44   3              }
+  45   2          }
+  46   1      }
+  47          
+  48          /* 配置并启动T1 */
+  49          void ConfigTimer1(unsigned int ms)
+  50          {
+  51   1          unsigned long tmp;
+  52   1      
+  53   1          tmp = 11059200 / 12;
+  54   1          tmp = (tmp * ms) / 1000;
+C51 COMPILER V9.60.0.0   MAIN                                                              02/04/2022 22:44:32 PAGE 2   
+
+  55   1          tmp = 65536 - tmp;
+  56   1          // tmp += 32;
+  57   1          T1RH = (unsigned char)(tmp >> 8);
+  58   1          T1RL = (unsigned char)tmp;
+  59   1          TMOD &= 0x0F;                   //清零T1控制位
+  60   1          TMOD |= 0x10;                   //设置T1工作模式
+  61   1          TH1 = T1RH;                     //加载T1重载值
+  62   1          TL1 = T1RL;    
+  63   1          ET1 = 1;                        //使能T1中断
+  64   1          TR1 = 1;                        //启动T1
+  65   1      }
+  66          
+  67          /* 配置并启动PWM，fr为频率，dc为占空比 */
+  68          void ConfigPWM(unsigned int fr, unsigned char dc)
+  69          {
+  70   1          unsigned int high, low;
+  71   1      
+  72   1          PeriodCnt = (11059200/12) / fr; //计算一个周期所需的计数值
+  73   1          high = (PeriodCnt * dc) / 100;  //计算高电平所需的计数值
+  74   1          low = PeriodCnt - high;         //计算低电平所需的计数值
+  75   1          high = 65536 - high;// + 23;            //计算高电平的定时器重载值
+  76   1                           //并补偿中断延时
+  77   1          low = 65536 - low;// + 23;              //计算低电平的定时器重载值
+  78   1                            //并补偿中断延时
+  79   1          HighRH = (unsigned char)(high >> 8);                   //重载值拆分高低字节
+  80   1          HighRL = (unsigned char)high;
+  81   1          LowRH = (unsigned char)(low >> 8);
+  82   1          LowRL = (unsigned char)low;
+  83   1          TMOD &= 0xF0;                                          //清零T0控制位
+  84   1          TMOD |= 0x01;                                          //配置T0为模式1
+  85   1          TH0 = HighRH;
+  86   1          TL0 = HighRL;                   
+  87   1          ET0 = 1;
+  88   1          TR0 = 1;
+  89   1          PWMOUT = TrafficLightColor[color];                     //输出低电平，先亮红灯
+  90   1      }   
+  91          
+  92          /* 占空比调整函数，频率不变只调整占空比 */
+  93          void AdjustDutyCycle(unsigned char dc)
+  94          {
+  95   1          unsigned int high, low;
+  96   1      
+  97   1          high = (PeriodCnt * dc) / 100;
+  98   1          low = PeriodCnt - high;
+  99   1          high = 65536 - high;// + 23;
+ 100   1          low = 65536 - low;// + 23; 
+ 101   1          HighRH = (unsigned char)(high >> 8);
+ 102   1          HighRL = (unsigned char)high;
+ 103   1          LowRH = (unsigned char)(low >> 8);
+ 104   1          LowRL = (unsigned char)low;
+ 105   1      }
+ 106          
+ 107          /* 交通灯状态刷新函数 */
+ 108          void TrafficLight()
+ 109          {
+ 110   1          if(timer == 0)
+ 111   1          {
+ 112   2              switch(color)
+ 113   2              {
+ 114   3                  case 0:                 //切换到黄灯亮3秒
+ 115   3                      color = 1;
+ 116   3                      timer = 2;
+C51 COMPILER V9.60.0.0   MAIN                                                              02/04/2022 22:44:32 PAGE 3   
+
+ 117   3                      PWMOUT = TrafficLightColor[color];
+ 118   3                      break;
+ 119   3                  case 1:                 //切换到红灯亮10秒
+ 120   3                      color = 2;
+ 121   3                      timer = 9;
+ 122   3                      PWMOUT = TrafficLightColor[color];
+ 123   3                      break;
+ 124   3                  case 2:                 //切换到绿灯亮10秒
+ 125   3                      color = 0;
+ 126   3                      timer = 9;
+ 127   3                      PWMOUT = TrafficLightColor[color];
+ 128   3                      break;
+ 129   3                  default:
+ 130   3                      break;
+ 131   3              }
+ 132   2          }
+ 133   1          else
+ 134   1          {
+ 135   2              timer--;
+ 136   2          }
+ 137   1      }
+ 138          
+ 139          /* T0中断服务函数，产生PWM输出 */
+ 140          void InterruptTimer0() interrupt 1
+ 141          {
+ 142   1          if(PWMOUT == 0xFF)                 //若当前正在输出高电平，装载低电平值并输出低�
+             -�平(此时信号灯不亮)   
+ 143   1          {
+ 144   2              TH0 = LowRH;
+ 145   2              TL0 = LowRL;
+ 146   2              PWMOUT = TrafficLightColor[color];
+ 147   2          }
+ 148   1          else                            //若当前正在输出低电平，装载高电平值并输出高电�
+             -�
+ 149   1          {
+ 150   2              TH0 = HighRH;
+ 151   2              TL0 = HighRL;
+ 152   2              PWMOUT = 0xFF;
+ 153   2          }
+ 154   1      }
+ 155          
+ 156          /* T1中断服务函数，进行1s的计时，并每50ms调整一次占空比 */
+ 157          void InterruptTimer1() interrupt 3
+ 158          {
+ 159   1          static unsigned char idx = 0;              //占空比调整表索引
+ 160   1          static bit dir = 0;                 //占空比变化方向标志变量      
+ 161   1          static unsigned char cnt_50ms = 0;
+ 162   1          // unsigned char code table[13] = {    //占空比调整表
+ 163   1          //     5, 18, 30, 41, 51, 60, 68, 75, 81, 86, 90, 93, 95
+ 164   1          // };
+ 165   1          unsigned char code table[10] = {           //占空比调整表，根据调整时间
+ 166   1              10, 23, 35, 46, 56, 65, 73, 80, 86, 91
+ 167   1          };
+ 168   1          TH1 = T1RH;
+ 169   1          TL1 = T1RL;
+ 170   1      
+ 171   1          cnt_50ms++;
+ 172   1          if(cnt_50ms == 20)              //计时满1秒
+ 173   1          {
+ 174   2              flag_1s = 1;
+ 175   2              cnt_50ms = 0;
+ 176   2          }
+C51 COMPILER V9.60.0.0   MAIN                                                              02/04/2022 22:44:32 PAGE 4   
+
+ 177   1      
+ 178   1          if(timer <= 2)                          //进入3秒倒计时，动态调整占空比使得信号灯�
+             -�烁
+ 179   1          {    
+ 180   2              AdjustDutyCycle(table[idx]);
+ 181   2              if(!dir)                            //占空比朝增大方向变化
+ 182   2              {
+ 183   3                  idx++;
+ 184   3                  if(idx >= 9)
+ 185   3                  {
+ 186   4                      dir = 1;
+ 187   4                  }
+ 188   3              }
+ 189   2              else                                //占空比朝减小方向变化 
+ 190   2              {
+ 191   3                  idx--;
+ 192   3                  if(idx == 0)
+ 193   3                  {
+ 194   4                      dir = 0;
+ 195   4                  }
+ 196   3              }
+ 197   2          }
+ 198   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    536    ----
+   CONSTANT SIZE    =     13    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     14       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

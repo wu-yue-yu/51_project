@@ -1,0 +1,396 @@
+[2022-02-01 12:22:10]	[done]
+	build successfully !
+
+[2022-02-01 12:23:21]	[done]
+	build successfully !
+
+[2022-02-01 12:23:53]	[done]
+	build successfully !
+
+[2022-02-01 12:24:03]	[done]
+	build successfully !
+
+[2022-02-01 12:24:23]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\timer_bomb\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C141 IN LINE 29 OF .\MAIN.C: syntax error near '=', expected ';'
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
+
+[2022-02-01 12:24:47]	[done]
+	build successfully !
+
+[2022-02-01 12:25:11]	[done]
+	build successfully !
+
+[2022-02-01 12:28:26]	[done]
+	build successfully !
+
+[2022-02-01 12:28:36]	[done]
+	build successfully !
+
+[2022-02-01 12:29:39]	[done]
+	build successfully !
+
+[2022-02-01 12:30:27]	[done]
+	build successfully !
+
+[2022-02-01 12:30:36]	[done]
+	build successfully !
+
+[2022-02-01 12:31:02]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\timer_bomb\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C141 IN LINE 12 OF .\MAIN.C: syntax error near 'P1', expected 'const'
+*** ERROR C202 IN LINE 74 OF .\MAIN.C: 'PWMOUT': undefined identifier
+*** ERROR C202 IN LINE 96 OF .\MAIN.C: 'PWMOUT': undefined identifier
+*** ERROR C202 IN LINE 100 OF .\MAIN.C: 'PWMOUT': undefined identifier
+*** ERROR C202 IN LINE 106 OF .\MAIN.C: 'PWMOUT': undefined identifier
+C51 COMPILATION COMPLETE.  0 WARNING(S),  5 ERROR(S)
+
+[2022-02-01 12:32:52]	[done]
+	build successfully !
+
+[2022-02-01 12:33:17]	[done]
+	build successfully !
+
+[2022-02-01 12:33:42]	[done]
+	build successfully !
+
+[2022-02-01 12:35:08]	[done]
+	build successfully !
+
+[2022-02-01 12:35:30]	[done]
+	build successfully !
+
+[2022-02-01 12:35:46]	[done]
+	build successfully !
+
+[2022-02-03 21:21:04]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\timer_bomb\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C202 IN LINE 113 OF .\MAIN.C: 'color': undefined identifier
+*** ERROR C202 IN LINE 116 OF .\MAIN.C: 'color': undefined identifier
+*** ERROR C202 IN LINE 121 OF .\MAIN.C: 'color': undefined identifier
+*** ERROR C202 IN LINE 126 OF .\MAIN.C: 'color': undefined identifier
+C51 COMPILATION COMPLETE.  0 WARNING(S),  4 ERROR(S)
+
+[2022-02-03 21:21:13]	link failed !, exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01a1e] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+LX51 LINKER/LOCATER V4.66.97.0 - SN: K1DZC-YRXDFC
+COPYRIGHT ARM Germany GmbH 1995 - 2019
+"@d:\keilc51_workspace\51_project_code\STC89C52\timer_bomb\build\Target 1\timer_bomb.lnp" 
+".\build\Target 1\main.o",".\build\Target 1\STARTUP.o",c:\Keil_v5\C51\LIB\C51S.LIB TO ".\build\Target 1\timer_bomb"
+PRINT(".\build\Target 1\timer_bomb.map") REMOVEUNUSED
+*** ERROR L127: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  TrafficLight
+    MODULE:  .\build\Target 1\main.o (MAIN)
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  TrafficLight
+    MODULE:  .\build\Target 1\main.o (MAIN)
+    ADDRESS: 10003EFH
+Program Size: data=25.2 xdata=0 const=13 code=990
+LX51 RUN COMPLETE.  0 WARNING(S),  2 ERROR(S)
+
+
+[2022-02-03 21:21:29]	link failed !, exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x01a1e] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+LX51 LINKER/LOCATER V4.66.97.0 - SN: K1DZC-YRXDFC
+COPYRIGHT ARM Germany GmbH 1995 - 2019
+"@d:\keilc51_workspace\51_project_code\STC89C52\timer_bomb\build\Target 1\timer_bomb.lnp" 
+".\build\Target 1\main.o",".\build\Target 1\STARTUP.o",c:\Keil_v5\C51\LIB\C51S.LIB TO ".\build\Target 1\timer_bomb"
+PRINT(".\build\Target 1\timer_bomb.map") REMOVEUNUSED
+*** ERROR L127: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  TrafficLight
+    MODULE:  .\build\Target 1\main.o (MAIN)
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  TrafficLight
+    MODULE:  .\build\Target 1\main.o (MAIN)
+    ADDRESS: 10003EFH
+Program Size: data=25.2 xdata=0 const=13 code=990
+LX51 RUN COMPLETE.  0 WARNING(S),  2 ERROR(S)
+
+
+[2022-02-03 21:21:42]	[done]
+	build successfully !
+
+[2022-02-03 21:22:08]	[done]
+	build successfully !
+
+[2022-02-03 21:22:35]	[done]
+	build successfully !
+
+[2022-02-03 21:23:06]	[done]
+	build successfully !
+
+[2022-02-03 21:23:28]	[done]
+	build successfully !
+
+[2022-02-03 21:23:42]	[done]
+	build successfully !
+
+[2022-02-03 21:25:28]	[done]
+	build successfully !
+
+[2022-02-03 21:25:42]	[done]
+	build successfully !
+
+[2022-02-03 21:26:00]	[done]
+	build successfully !
+
+[2022-02-03 21:26:27]	[done]
+	build successfully !
+
+[2022-02-03 21:26:55]	[done]
+	build successfully !
+
+[2022-02-03 21:27:28]	[done]
+	build successfully !
+
+[2022-02-03 21:30:21]	[done]
+	build successfully !
+
+[2022-02-03 21:31:49]	[done]
+	build successfully !
+
+[2022-02-03 21:32:45]	[done]
+	build successfully !
+
+[2022-02-03 21:33:01]	[done]
+	build successfully !
+
+[2022-02-03 21:35:00]	[done]
+	build successfully !
+
+[2022-02-03 21:35:19]	[done]
+	build successfully !
+
+[2022-02-03 21:35:29]	[done]
+	build successfully !
+
+[2022-02-03 21:43:19]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\timer_bomb\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C202 IN LINE 35 OF .\MAIN.C: 'cntMove': undefined identifier
+*** ERROR C202 IN LINE 43 OF .\MAIN.C: 'cntMove': undefined identifier
+C51 COMPILATION COMPLETE.  0 WARNING(S),  2 ERROR(S)
+
+[2022-02-03 21:44:39]	[done]
+	build successfully !
+
+[2022-02-03 21:46:09]	[done]
+	build successfully !
+
+[2022-02-03 21:48:56]	[done]
+	build successfully !
+
+[2022-02-03 21:49:19]	[done]
+	build successfully !
+
+[2022-02-03 21:50:28]	[done]
+	build successfully !
+
+[2022-02-03 21:55:39]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\timer_bomb\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C141 IN LINE 34 OF .\MAIN.C: syntax error near 'bit', expected 'sizeof'
+*** ERROR C141 IN LINE 40 OF .\MAIN.C: syntax error near '=', expected 'hdata'
+*** ERROR C141 IN LINE 44 OF .\MAIN.C: syntax error near 'bit', expected 'sizeof'
+*** ERROR C141 IN LINE 50 OF .\MAIN.C: syntax error near '=', expected 'hdata'
+C51 COMPILATION COMPLETE.  0 WARNING(S),  4 ERROR(S)
+
+[2022-02-03 21:55:56]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\timer_bomb\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C141 IN LINE 44 OF .\MAIN.C: syntax error near 'bit', expected 'sizeof'
+*** ERROR C141 IN LINE 50 OF .\MAIN.C: syntax error near '=', expected 'hdata'
+C51 COMPILATION COMPLETE.  0 WARNING(S),  2 ERROR(S)
+
+[2022-02-03 21:56:09]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\timer_bomb\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C202 IN LINE 16 OF .\MAIN.C: 'dir': undefined identifier
+*** ERROR C141 IN LINE 16 OF .\MAIN.C: syntax error near 'dir', expected ';'
+*** ERROR C202 IN LINE 34 OF .\MAIN.C: 'dir': undefined identifier
+*** ERROR C202 IN LINE 40 OF .\MAIN.C: 'dir': undefined identifier
+*** ERROR C141 IN LINE 44 OF .\MAIN.C: syntax error near 'bit', expected 'sizeof'
+*** ERROR C202 IN LINE 50 OF .\MAIN.C: 'dir': undefined identifier
+C51 COMPILATION COMPLETE.  0 WARNING(S),  6 ERROR(S)
+
+[2022-02-03 21:56:19]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\timer_bomb\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C141 IN LINE 44 OF .\MAIN.C: syntax error near 'bit', expected 'sizeof'
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
+
+[2022-02-03 21:56:26]	[done]
+	build successfully !
+
+[2022-02-03 21:59:28]	[done]
+	build successfully !
+
+[2022-02-03 22:00:41]	[done]
+	build successfully !
+
+[2022-02-03 22:14:47]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\timer_bomb\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C202 IN LINE 112 OF .\MAIN.C: 'color': undefined identifier
+*** ERROR C202 IN LINE 115 OF .\MAIN.C: 'color': undefined identifier
+*** ERROR C202 IN LINE 120 OF .\MAIN.C: 'color': undefined identifier
+*** ERROR C202 IN LINE 125 OF .\MAIN.C: 'color': undefined identifier
+C51 COMPILATION COMPLETE.  0 WARNING(S),  4 ERROR(S)
+
+[2022-02-03 22:15:09]	[done]
+	build successfully !
+
+[2022-02-03 22:15:18]	[done]
+	build successfully !
+
+[2022-02-03 22:25:50]	[done]
+	build successfully !
+
+[2022-02-03 22:28:24]	compilation failed at : "d:\keilc51_workspace\51_project_code\STC89C52\timer_bomb\main.c", exit code: 2
+  at unify_builder.Program.Main (System.String[] args) [0x0187a] in <67d11e1b30504dd6babd321425698ba1>:0 
+---
+C51 COMPILER V9.60.0.0 - SN: K1DZC-YRXDFC
+COPYRIGHT Copyright (C) 2012 - 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+*** ERROR C202 IN LINE 154 OF .\MAIN.C: 'color': undefined identifier
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
+
+[2022-02-03 22:29:14]	[done]
+	build successfully !
+
+[2022-02-03 22:31:50]	[done]
+	build successfully !
+
+[2022-02-03 22:35:26]	[done]
+	build successfully !
+
+[2022-02-03 22:37:05]	[done]
+	build successfully !
+
+[2022-02-03 22:37:46]	[done]
+	build successfully !
+
+[2022-02-03 22:38:38]	[done]
+	build successfully !
+
+[2022-02-03 22:39:25]	[done]
+	build successfully !
+
+[2022-02-03 22:42:56]	[done]
+	build successfully !
+
+[2022-02-03 22:44:37]	[done]
+	build successfully !
+
+[2022-02-03 22:45:45]	[done]
+	build successfully !
+
+[2022-02-03 22:47:51]	[done]
+	build successfully !
+
+[2022-02-03 22:50:37]	[done]
+	build successfully !
+
+[2022-02-03 22:51:34]	[done]
+	build successfully !
+
+[2022-02-03 22:52:51]	[done]
+	build successfully !
+
+[2022-02-03 22:54:42]	[done]
+	build successfully !
+
+[2022-02-03 22:56:58]	[done]
+	build successfully !
+
+[2022-02-03 23:02:16]	[done]
+	build successfully !
+
+[2022-02-03 23:03:17]	[done]
+	build successfully !
+
+[2022-02-03 23:04:10]	[done]
+	build successfully !
+
+[2022-02-03 23:04:37]	[done]
+	build successfully !
+
+[2022-02-04 18:30:45]	[done]
+	build successfully !
+
+[2022-02-04 18:31:51]	[done]
+	build successfully !
+
+[2022-02-04 18:35:06]	[done]
+	build successfully !
+
+[2022-02-04 18:35:26]	[done]
+	build successfully !
+
+[2022-02-04 18:54:42]	[done]
+	build successfully !
+
+[2022-02-04 19:03:52]	[done]
+	build successfully !
+
+[2022-02-04 19:04:19]	[done]
+	build successfully !
+
+[2022-02-04 19:04:58]	[done]
+	build successfully !
+
+[2022-02-04 19:10:20]	[done]
+	build successfully !
+
+[2022-02-04 19:11:32]	[done]
+	build successfully !
+
+[2022-02-04 19:12:13]	[done]
+	build successfully !
+
+[2022-02-04 19:12:49]	[done]
+	build successfully !
+
+[2022-02-04 19:13:11]	[done]
+	build successfully !
+
+[2022-02-04 19:13:26]	[done]
+	build successfully !
+
+[2022-02-04 19:14:02]	[done]
+	build successfully !
+
+[2022-02-04 22:40:44]	[done]
+	build successfully !
+
+[2022-02-04 22:43:42]	[done]
+	build successfully !
+
+[2022-02-04 22:52:30]	[done]
+	build successfully !
+
+[2022-02-04 22:53:43]	[done]
+	build successfully !
+
